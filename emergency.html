@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="STAT">
+<meta name="theme-color" content="#0a0f14">
+<title>STAT Protocols</title>
+<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0f14;--sf:#111820;--sf2:#182030;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--ac:#00e5a0;--rd:#ff4d6d;--am:#ffb547;--bl:#4da6ff;--pu:#a78bfa;--tx:#e8f0f8;--mu:rgba(232,240,248,0.45);--fa:rgba(232,240,248,0.18)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none;background:var(--bg)}
+body{font-family:'DM Mono',monospace;color:var(--tx);display:flex;flex-direction:column;max-width:430px;margin:0 auto}
+.sa-spacer{height:env(safe-area-inset-top,44px);background:var(--bg);position:sticky;top:0;z-index:101}
+.topbar{position:sticky;top:env(safe-area-inset-top,44px);z-index:100;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.app-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px;color:var(--rd)}
+.app-title span{color:var(--tx)}
+.wt-bar{background:var(--sf);border-bottom:1px solid var(--bd);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.wt-label{font-size:11px;color:var(--mu);white-space:nowrap}
+.wt-input{background:var(--sf2);border:1px solid var(--bd2);border-radius:8px;padding:6px 10px;font-family:'DM Mono',monospace;font-size:14px;color:var(--tx);outline:none;width:80px;caret-color:var(--ac)}
+.wt-input:focus{border-color:var(--ac)}
+.wt-unit{font-size:11px;color:var(--mu)}
+.tabs{display:flex;overflow-x:auto;gap:0;background:var(--sf);border-bottom:1px solid var(--bd);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:10px 13px;font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;background:transparent;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--rd);border-bottom-color:var(--rd)}
+.content{flex:1;overflow-y:auto;padding:0 0 calc(env(safe-area-inset-bottom,0px) + 20px)}
+.proto-card{border-radius:14px;margin-bottom:14px;overflow:hidden;border:1px solid rgba(255,77,109,0.3);background:rgba(255,77,109,0.04)}
+.proto-card.amber{border-color:rgba(255,181,71,0.3);background:rgba(255,181,71,0.04)}
+.proto-card.blue{border-color:rgba(77,166,255,0.3);background:rgba(77,166,255,0.04)}
+.proto-card.green{border-color:rgba(0,229,160,0.3);background:rgba(0,229,160,0.04)}
+.proto-header{padding:12px 16px;border-bottom:1px solid rgba(255,77,109,0.2);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.proto-card.amber .proto-header{border-bottom-color:rgba(255,181,71,0.2)}
+.proto-card.blue .proto-header{border-bottom-color:rgba(77,166,255,0.2)}
+.proto-card.green .proto-header{border-bottom-color:rgba(0,229,160,0.2)}
+.proto-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--rd)}
+.proto-card.amber .proto-title{color:var(--am)}
+.proto-card.blue .proto-title{color:var(--bl)}
+.proto-card.green .proto-title{color:var(--ac)}
+.badge{font-size:9px;padding:3px 9px;border-radius:999px;white-space:nowrap;border:1px solid}
+.badge-red{background:rgba(255,77,109,0.15);color:var(--rd);border-color:rgba(255,77,109,0.3)}
+.badge-amber{background:rgba(255,181,71,0.15);color:var(--am);border-color:rgba(255,181,71,0.3)}
+.badge-green{background:rgba(0,229,160,0.15);color:var(--ac);border-color:rgba(0,229,160,0.3)}
+.badge-blue{background:rgba(77,166,255,0.15);color:var(--bl);border-color:rgba(77,166,255,0.3)}
+.proto-sub{font-size:10px;color:var(--mu)}
+.steps{padding:12px 16px}
+.step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start}
+.step:last-child{margin-bottom:0}
+.snum{width:26px;height:26px;min-width:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;margin-top:1px;flex-shrink:0}
+.snum-red{background:var(--rd);color:#fff}
+.snum-amber{background:var(--am);color:#000}
+.snum-green{background:var(--ac);color:#000}
+.snum-blue{background:var(--bl);color:#fff}
+.sbody{}
+.stxt{font-size:13px;line-height:1.5;color:var(--tx)}
+.ssub{font-size:11px;color:var(--mu);margin-top:3px;line-height:1.5}
+.sdose{font-size:13px;font-weight:500;color:var(--rd);margin-top:3px;line-height:1.5}
+.dose-box{background:var(--sf2);border-radius:10px;padding:10px 14px;margin:6px 0 12px;border:1px solid var(--bd2)}
+.dose-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd)}
+.dose-row:last-child{border-bottom:none}
+.dlabel{font-size:11px;color:var(--mu)}
+.dval{font-size:13px;font-weight:500;color:var(--rd)}
+.hotline{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.3);border-radius:10px;padding:10px 14px;margin:0 0 12px;font-size:12px;color:var(--rd);text-align:center;letter-spacing:0.04em}
+</style>
+</head>
+<body>
+<div class="sa-spacer"></div>
+<div class="topbar">
+  <div class="app-title">STAT<span> Protocols</span></div>
+  <span class="badge badge-red">Emergency</span>
+</div>
+<div class="wt-bar">
+  <span class="wt-label">Patient weight</span>
+  <input class="wt-input" type="number" id="wt" placeholder="70" min="1" max="300" oninput="renderAll()">
+  <span class="wt-unit">kg</span>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="sw(0,this)">Airway</button>
+  <button class="tab" onclick="sw(1,this)">Cardiac</button>
+  <button class="tab" onclick="sw(2,this)">Anaphylaxis</button>
+  <button class="tab" onclick="sw(3,this)">MH</button>
+  <button class="tab" onclick="sw(4,this)">Pulm</button>
+  <button class="tab" onclick="sw(5,this)">Metabolic</button>
+  <button class="tab" onclick="sw(6,this)">OB</button>
+  <button class="tab" onclick="sw(7,this)">Other</button>
+</div>
+<div class="content" id="mainContent"></div>
+<script>
+
+var activeTab = 0;
+
+function sw(idx, btn) {
+  activeTab = idx;
+  var tabs = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  btn.classList.add('active');
+  renderAll();
+}
+
+function getWt() {
+  return parseFloat(document.getElementById('wt').value) || null;
+}
+
+function fmt(n) { return Math.round(n); }
+function fmt1(n) { return n.toFixed(1); }
+function fmt2(n) { return n.toFixed(2); }
+
+function step(num, cls, txt, sub, dose) {
+  var h = '<div class="step">';
+  h += '<div class="snum snum-' + cls + '">' + num + '</div>';
+  h += '<div class="sbody"><div class="stxt">' + txt + '</div>';
+  if (sub) h += '<div class="ssub">' + sub + '</div>';
+  if (dose) h += '<div class="sdose">' + dose + '</div>';
+  h += '</div></div>';
+  return h;
+}
+
+function card(title, sub, cls, badge, content) {
+  var h = '<div class="proto-card ' + (cls || '') + '">';
+  h += '<div class="proto-header"><div>';
+  h += '<div class="proto-title">' + title + '</div>';
+  if (sub) h += '<div class="proto-sub">' + sub + '</div>';
+  h += '</div>';
+  if (badge) h += '<span class="badge badge-' + cls + '">' + badge + '</span>';
+  h += '</div><div class="steps">' + content + '</div></div>';
+  return h;
+}
+
+function dbox(rows) {
+  var h = '<div class="dose-box">';
+  for (var i = 0; i < rows.length; i++) {
+    h += '<div class="dose-row"><span class="dlabel">' + rows[i][0] + '</span><span class="dval">' + rows[i][1] + '</span></div>';
+  }
+  return h + '</div>';
+}
+
+function hotline(txt) {
+  return '<div class="hotline">' + txt + '</div>';
+}
+
+function renderAirway(wt) {
+  var h = '';
+
+  h += card('Laryngospasm', 'Partial or complete glottic closure', 'red', 'AIRWAY EMERGENCY',
+    step(1,'red','Remove ALL airway stimulation immediately','Stop instrumentation, suctioning, lighten if light anesthesia') +
+    step(2,'red','Call for help','') +
+    step(3,'amber','100% O2 + jaw thrust + CPAP 20-40 cmH2O','Tight mask seal. Positive pressure may break partial laryngospasm.') +
+    step(4,'red','Succinylcholine if not breaking',
+      wt ? 'IV: ' + fmt(wt*1.5) + ' mg (1.5 mg/kg) | IM deltoid: ' + fmt(wt*4) + ' mg (4 mg/kg) if no IV' :
+      'IV: 1.5 mg/kg | IM: 4 mg/kg if no IV') +
+    step(5,'amber','Atropine if bradycardia from succs',
+      wt ? fmt2(wt*0.02) + ' mg IV (0.02 mg/kg)' : '0.02 mg/kg IV') +
+    step(6,'green','Intubate once relaxed - confirm ETCO2','Avoid re-stimulation until adequate depth') +
+    step(7,'green','Identify and treat cause','Light anesthesia, secretions, aspiration, blood')
+  );
+
+  h += card('Bronchospasm', 'Severe intraoperative wheeze', 'red', 'EMERGENCY',
+    step(1,'red','Deepen anesthesia immediately','Increase volatile agent. Ketamine 0.5-1 mg/kg IV bronchodilates.') +
+    step(2,'red','100% FiO2 - hand ventilate','Prolong expiratory time. Reduce RR. Allow auto-PEEP to resolve.') +
+    step(3,'amber','Albuterol MDI 6-8 puffs via ETT adapter','') +
+    step(4,'red','Epinephrine - first line for severe bronchospasm',
+      wt ? 'IV bolus: ' + fmt(wt*10) + '-' + fmt(wt*50) + ' mcg (10-50 mcg fixed or 0.01-0.05 mcg/kg)' :
+      'IV push: 10-50 mcg bolus titrated') +
+    step(5,'amber','Ketamine if hypotensive bronchospasm',
+      wt ? fmt(wt*0.5) + '-' + fmt(wt*1.5) + ' mg IV (0.5-1.5 mg/kg)' : '0.5-1.5 mg/kg IV') +
+    step(6,'blue','Magnesium sulfate 2g IV over 10-20 min','Bronchodilator adjunct for refractory cases') +
+    step(7,'blue','Methylprednisolone 1-2 mg/kg IV','Anti-inflammatory adjunct - not immediate effect') +
+    step(8,'green','Check ETT - exclude right mainstem intubation','Listen bilaterally, check depth at teeth') +
+    step(9,'green','Exclude anaphylaxis if cardiovascular compromise','')
+  );
+
+  h += card('CICO', 'Cannot Intubate Cannot Oxygenate', 'red', 'DECLARE EMERGENCY',
+    step(1,'red','DECLARE CICO ALOUD - call for help NOW','') +
+    step(2,'red','BVM with OPA/NPA - two-person technique','Jaw thrust, tight seal') +
+    step(3,'red','Insert LMA immediately','Size 3-4 female, 4-5 male - may be last airway') +
+    step(4,'red','Video laryngoscopy - ONE more attempt only','Do not fixate. If fails - go to front of neck.') +
+    step(5,'red','FRONT OF NECK ACCESS - surgical airway NOW','Scalpel-finger-bougie technique') +
+    step(6,'red','Technique: horizontal stab through CTM, finger to dilate, bougie through, railroad 6.0 ETT, inflate cuff, confirm ETCO2','') +
+    step(7,'amber','Needle cric if no scalpel available','14G IV through CTM - jet ventilate - temporizing only') +
+    step(8,'green','Call for surgical tracheostomy once oxygenating','')
+  );
+
+  h += card('Difficult Airway', 'Cannot intubate - can oxygenate', 'amber', 'CONTROLLED',
+    step(1,'amber','Maintain oxygenation - mask or LMA','Do NOT persist with failed attempts') +
+    step(2,'amber','Max 3 total intubation attempts - then escalate','Each attempt risks more edema and trauma') +
+    step(3,'amber','Call for senior help immediately','') +
+    step(4,'amber','Video laryngoscope if not already used','GlideScope, C-MAC, McGrath') +
+    step(5,'amber','Fiberoptic through LMA if ventilating','Aintree catheter technique') +
+    step(6,'red','Surgical airway if oxygenation deteriorating','Do NOT delay - early is better than late')
+  );
+
+  h += card('Pulmonary Aspiration', 'Witnessed or suspected aspiration', 'amber', 'HIGH RISK',
+    step(1,'amber','Head down left lateral if possible','Gravity drainage of airway') +
+    step(2,'amber','Suction oropharynx immediately - Yankauer','') +
+    step(3,'red','Intubate if not already - protect airway','') +
+    step(4,'amber','Suction through ETT - clear airway','Flexible catheter - remove particulates') +
+    step(5,'blue','Bronchoscopy if particulate aspiration','Remove debris') +
+    step(6,'blue','PEEP 5-10 cmH2O for hypoxemia','Lung recruitment') +
+    step(7,'green','ABG and CXR - continue monitoring','Do NOT give prophylactic steroids or antibiotics') +
+    step(8,'green','Antibiotics only if infection develops','Not prophylactically')
+  );
+
+  return h;
+}
+
+function renderCardiac(wt) {
+  var h = '';
+
+  h += card('Cardiac Arrest', 'PEA / VF / VT / Asystole', 'red', 'CODE',
+    step(1,'red','Call code - start CPR 100-120 per min','30:2 if no ETT. Continuous if ETT in place.') +
+    step(2,'red','Confirm rhythm - attach defibrillator','VF/pVT - shock 200J biphasic immediately') +
+    step(3,'red','Epinephrine 1 mg IV q3-5 min','1 mg fixed dose for arrest - not weight-based') +
+    step(4,'red','Treat reversible causes - 4Hs 4Ts','Hypoxia, Hypovolemia, H+ acidosis, Hypo/Hyperkalemia | Tension PTX, Tamponade, Toxins, Thrombosis') +
+    step(5,'amber','Amiodarone for VF/VT - 300 mg IV push','Then 150 mg if refractory') +
+    step(6,'amber','Bicarbonate 1 mEq/kg if prolonged or acidosis',
+      wt ? fmt(wt) + ' mEq IV' : '1 mEq/kg IV') +
+    step(7,'green','After ROSC - treat cause, MAP >65, SpO2 94-98%','')
+  );
+
+  h += card('Severe Hypotension', 'SBP < 70 or MAP < 50', 'red', 'TREAT NOW',
+    step(1,'red','Phenylephrine bolus first line',
+      wt ? fmt(wt*1.5) + '-' + fmt(wt*2) + ' mcg IV push (1.5-2 mcg/kg)' : '100-200 mcg IV push') +
+    step(2,'red','Ephedrine if bradycardic hypotension',
+      wt ? fmt1(wt*0.1) + '-' + fmt1(wt*0.2) + ' mg IV (0.1-0.2 mg/kg)' : '5-10 mg IV bolus') +
+    step(3,'red','Epinephrine if refractory',
+      wt ? fmt(wt*10) + '-' + fmt(wt*50) + ' mcg IV bolus' : '10-50 mcg IV bolus') +
+    step(4,'amber','IV fluid bolus 500 mL crystalloid rapid','Assess volume status') +
+    step(5,'amber','Reduce or stop volatile agent - lighten anesthesia','Consider TIVA') +
+    step(6,'amber','Identify cause','Vasodilation, hypovolemia, cardiac, anaphylaxis, PE') +
+    step(7,'blue','Start vasopressor infusion if ongoing','Norepinephrine 0.05-0.3 mcg/kg/min')
+  );
+
+  h += card('Severe Bradycardia', 'HR < 40 or hemodynamically significant', 'amber', 'URGENT',
+    step(1,'amber','Atropine 0.5-1 mg IV - repeat q3-5 min','Max 3 mg total') +
+    step(2,'amber','Ephedrine if hypotensive',
+      wt ? fmt1(wt*0.1) + '-' + fmt1(wt*0.2) + ' mg IV' : '5-10 mg IV') +
+    step(3,'amber','Glycopyrrolate 0.2-0.4 mg IV','Alternative - no CNS effects') +
+    step(4,'red','Epinephrine 10-50 mcg IV if severe or arrest','') +
+    step(5,'blue','Transcutaneous pacing if refractory','Rate 80, current 50-100 mA, titrate') +
+    step(6,'green','Identify cause','High spinal, vagal, succs, neostigmine, opioid, beta blocker, hypoxia')
+  );
+
+  h += card('SVT / Tachyarrhythmia', 'HR > 150 narrow or wide complex', 'amber', 'URGENT',
+    step(1,'amber','Check BP - if unstable - synchronized cardioversion 100-200J','') +
+    step(2,'amber','Adenosine 6 mg rapid IV push + flush immediately','Repeat 12 mg x2 if no response') +
+    step(3,'amber','Metoprolol 2.5-5 mg IV slow if SVT persists','') +
+    step(4,'amber','Amiodarone 150 mg IV over 10 min for refractory SVT or AF','') +
+    step(5,'red','Wide complex VT - amiodarone 150 mg or shock if unstable','') +
+    step(6,'green','Identify cause','Light anesthesia, hypoxia, hypercarbia, hypovolemia, metabolic')
+  );
+
+  h += card('Hypertensive Crisis', 'SBP > 180 or MAP > 120 intraop', 'amber', 'URGENT',
+    step(1,'amber','Deepen anesthesia first - most common cause is light anesthesia','') +
+    step(2,'amber','Labetalol 5-20 mg IV slow push','Combined alpha/beta blocker') +
+    step(3,'amber','Hydralazine 5-10 mg IV','Onset 10-20 min') +
+    step(4,'amber','Nicardipine 1-2 mg IV or infusion','Calcium channel blocker - titratable') +
+    step(5,'blue','Nitroglycerin 100-200 mcg IV if coronary ischemia suspected','') +
+    step(6,'blue','Esmolol 0.5 mg/kg IV load then infusion','Short-acting beta blocker') +
+    step(7,'green','Identify cause','Pain, light anesthesia, pheo, aortic cross-clamp, drug effect')
+  );
+
+  h += card('Venous Air Embolism', 'Sudden ETCO2 drop + mill-wheel murmur', 'red', 'EMERGENCY',
+    step(1,'red','Notify surgeon - flood surgical field with saline NOW','') +
+    step(2,'red','Discontinue N2O immediately - 100% O2','N2O expands air bubble') +
+    step(3,'red','Lower surgical site below heart if possible','Left lateral decubitus head down - Durant maneuver') +
+    step(4,'amber','Aspirate CVP catheter if in place','May recover air from RV/RA') +
+    step(5,'amber','CPR if cardiac arrest from air lock','') +
+    step(6,'blue','Vasopressors for hypotension','') +
+    step(7,'green','Hyperbaric oxygen if available for massive VAE','')
+  );
+
+  return h;
+}
+
+function renderAnaphylaxis(wt) {
+  var h = '';
+
+  h += card('Anaphylaxis', 'Severe allergic reaction - cardiovascular collapse', 'red', 'CODE RED',
+    step(1,'red','CALL FOR HELP - activate emergency response NOW','') +
+    step(2,'red','EPINEPHRINE IM - GIVE IMMEDIATELY',
+      wt ? 'IM anterolateral thigh: 0.3-0.5 mg (1:1000) | IV push if collapse: ' + fmt(wt*10) + ' mcg = 0.1 mcg/kg' :
+      'IM: 0.3-0.5 mg (1:1000) | IV: 50-100 mcg bolus if collapse') +
+    step(3,'red','Stop all suspected trigger agents','Remove latex gloves, stop IV drug, stop blood product') +
+    step(4,'red','100% O2 - intubate early if airway edema','Laryngeal edema can progress rapidly') +
+    step(5,'amber','IV fluid bolus 1-2L rapid crystalloid','Massive vasodilation - aggressive resuscitation needed') +
+    step(6,'amber','Epinephrine infusion if refractory',
+      wt ? fmt2(wt*0.05) + '-' + fmt2(wt*0.3) + ' mcg/kg/min (0.05-0.3 mcg/kg/min)' : '0.05-0.3 mcg/kg/min') +
+    step(7,'blue','Diphenhydramine 25-50 mg IV','H1 blocker - adjunct only, NOT primary treatment') +
+    step(8,'blue','Ranitidine 50 mg IV or famotidine 20 mg IV','H2 blocker adjunct') +
+    step(9,'blue','Hydrocortisone 200 mg IV or methylprednisolone',
+      wt ? fmt(wt*1) + '-' + fmt(wt*2) + ' mg methylprednisolone (1-2 mg/kg)' : '1-2 mg/kg methylprednisolone') +
+    step(10,'blue','Glucagon 1-5 mg IV if patient on beta-blockers','Refractory bronchospasm/hypotension on beta blockers') +
+    step(11,'green','Monitor minimum 4-6 hrs - biphasic reaction risk 1-20%','ICU for severe reactions') +
+    step(12,'green','Tryptase levels - draw at 1, 4, 24 hrs','Peaks at 60-90 min')
+  );
+
+  h += dbox([
+    ['Epinephrine IM (1:1000)', '0.3-0.5 mg anterolateral thigh'],
+    ['Epinephrine IV bolus', wt ? fmt(wt*10) + ' mcg (0.1 mcg/kg) titrated' : '50-100 mcg bolus'],
+    ['Diphenhydramine IV', '25-50 mg'],
+    ['Hydrocortisone IV', '200 mg'],
+    ['Glucagon if beta-blocked', '1-5 mg IV']
+  ]);
+
+  h += hotline('Suspect latex? Remove ALL latex products from room immediately');
+
+  return h;
+}
+
+function renderMH(wt) {
+  var h = '';
+
+  var vials = wt ? Math.ceil(wt * 10 / 20) : null;
+
+  h += card('Malignant Hyperthermia', 'Hypermetabolic crisis from volatile agents or succinylcholine', 'red', 'MH HOTLINE',
+    step(1,'red','CALL MH HOTLINE: 1-800-644-9737','24/7 - call immediately when suspected') +
+    step(2,'red','Stop ALL volatile agents immediately','Switch to total IV anesthesia - propofol + fentanyl + NDMB') +
+    step(3,'red','Hyperventilate 100% O2 at 10 L/min FGF','Blow off CO2 - ventilate 2-3x normal minute volume') +
+    step(4,'red','DANTROLENE - give immediately',
+      wt ? 'INITIAL: ' + fmt(wt*2.5) + ' mg IV rapid (2.5 mg/kg) | REPEAT: ' + fmt(wt*1) + ' mg q5 min | MAX: ' + fmt(wt*10) + ' mg | VIALS NEEDED: ' + vials + ' vials minimum (20mg/vial)' :
+      '2.5 mg/kg IV rapid - repeat 1 mg/kg q5 min - max 10 mg/kg') +
+    step(5,'red','Active cooling NOW','Ice packs to axilla, groin, neck. Cold IV fluids 15 mL/kg. Cold lavage if open cavity.') +
+    step(6,'amber','Sodium bicarbonate for acidosis',
+      wt ? fmt(wt) + '-' + fmt(wt*2) + ' mEq IV (1-2 mEq/kg)' : '1-2 mEq/kg IV') +
+    step(7,'amber','Treat hyperkalemia','Calcium chloride 1g IV + insulin/dextrose + hyperventilate') +
+    step(8,'amber','Dextrose for hypoglycemia',
+      wt ? 'D50: ' + fmt(wt*1) + ' mL (0.5 g/kg)' : '0.5 g/kg dextrose') +
+    step(9,'amber','Treat arrhythmias - AVOID calcium channel blockers','CCBs + dantrolene = fatal hyperkalemia. Use amiodarone.') +
+    step(10,'blue','Foley catheter - goal UO > 1-2 mL/kg/hr','Prevent myoglobin renal failure') +
+    step(11,'green','ICU minimum 24 hrs - recrudescence possible','Continue dantrolene 1 mg/kg q6hr x 24hr') +
+    step(12,'green','Labs q30 min until stable','ABG, K+, CK, lactate, coags, myoglobin, BMP')
+  );
+
+  h += dbox([
+    ['Dantrolene initial dose', wt ? fmt(wt*2.5) + ' mg IV' : '2.5 mg/kg IV'],
+    ['Dantrolene repeat (q5min)', wt ? fmt(wt*1) + ' mg IV' : '1 mg/kg IV'],
+    ['Dantrolene max total', wt ? fmt(wt*10) + ' mg' : '10 mg/kg'],
+    ['Vials needed minimum (20mg/vial)', wt ? vials + ' vials' : 'Enter weight'],
+    ['Bicarb', wt ? fmt(wt) + ' mEq IV' : '1 mEq/kg IV']
+  ]);
+
+  h += hotline('MH Hotline: 1-800-644-9737 (MHAUS) | mhaus.org | Call EARLY');
+
+  h += card('MH - Avoid these triggers', 'Contraindicated in MH-susceptible patients', 'red', 'AVOID',
+    step(1,'red','ALL volatile halogenated agents','Sevoflurane, desflurane, isoflurane, halothane - ALL contraindicated') +
+    step(2,'red','Succinylcholine - absolute contraindication','Depolarizing NMB') +
+    step(3,'green','Safe: propofol, opioids, benzos, nitrous oxide, ketamine','') +
+    step(4,'green','Safe: all non-depolarizing NMBs','Rocuronium, vecuronium, cisatracurium, atracurium')
+  );
+
+  h += card('MH - Early Recognition', 'Early signs are often subtle', 'amber', 'HIGH SUSPICION',
+    step(1,'amber','Unexplained rise in ETCO2 - earliest and most sensitive sign','Despite adequate ventilation') +
+    step(2,'amber','Tachycardia out of proportion','Not explained by anesthetic depth or blood loss') +
+    step(3,'amber','Masseter muscle rigidity after succinylcholine','Jaw will not open after suxamethonium') +
+    step(4,'amber','Hyperthermia rising rapidly - temp > 38.8C','Late sign - crisis is advanced by this point') +
+    step(5,'amber','Generalized muscle rigidity','') +
+    step(6,'amber','Dark urine - myoglobinuria','Rhabdomyolysis') +
+    step(7,'amber','Mixed metabolic and respiratory acidosis on ABG','Low pH, high PaCO2, high base deficit, elevated lactate')
+  );
+
+  return h;
+}
+
+function renderPulm(wt) {
+  var h = '';
+
+  h += card('Severe Intraop Hypoxia', 'SpO2 < 90% not responding to FiO2', 'red', 'EMERGENCY',
+    step(1,'red','FiO2 100% immediately','') +
+    step(2,'red','Hand ventilate - check circuit and ETT','Disconnect vent, feel compliance manually') +
+    step(3,'red','Suction ETT - secretions or mucus plug','') +
+    step(4,'amber','Check ETT position - right mainstem intubation?','Pull back to 21-23 cm, confirm bilateral breath sounds') +
+    step(5,'amber','Exclude tension pneumothorax','Absent breath sounds one side, high peak pressures, hypotension') +
+    step(6,'amber','Lung recruitment - 40 cmH2O for 40 sec','If atelectasis suspected') +
+    step(7,'amber','Increase PEEP 5 to 8 to 10 cmH2O','') +
+    step(8,'blue','Check for bronchospasm or pulmonary edema','Treat cause specifically')
+  );
+
+  h += card('Tension Pneumothorax', 'Intraop or post-intubation', 'red', 'IMMEDIATELY LIFE THREATENING',
+    step(1,'red','CLINICAL DIAGNOSIS - do not wait for CXR','Decreased breath sounds, rising peak pressures, hypotension, tracheal deviation') +
+    step(2,'red','Needle decompression immediately','14G IV - 2nd ICS midclavicular line OR 4th ICS anterior axillary line') +
+    step(3,'red','Chest tube - definitive treatment','4th-5th ICS anterior axillary line') +
+    step(4,'amber','Discontinue N2O','N2O expands pneumothorax') +
+    step(5,'green','On positive pressure - reduce airway pressures','Lower TV, increase RR')
+  );
+
+  h += card('Pulmonary Edema', 'Intraoperative flash pulmonary edema', 'amber', 'URGENT',
+    step(1,'amber','Reverse Trendelenburg if possible - reduce preload','') +
+    step(2,'amber','100% O2 - increase PEEP to 8-12 cmH2O','Positive pressure improves oxygenation') +
+    step(3,'amber','Furosemide 40-80 mg IV','Diuresis and venodilation') +
+    step(4,'amber','Nitroglycerin 100-200 mcg IV bolus','Venodilator - reduces preload') +
+    step(5,'blue','Morphine 2-4 mg IV','Anxiolytic and venodilator') +
+    step(6,'green','Echo - assess EF, wall motion, valve function','Cardiogenic vs non-cardiogenic (TRALI, negative pressure, re-expansion)')
+  );
+
+  h += card('CO2 Embolism', 'Laparoscopic surgery - insufflation related', 'red', 'EMERGENCY',
+    step(1,'red','Inform surgeon - STOP insufflation immediately','') +
+    step(2,'red','Flood field - release pneumoperitoneum NOW','') +
+    step(3,'red','Discontinue N2O - 100% O2','') +
+    step(4,'red','Left lateral decubitus head down - Durant position','Moves gas away from right ventricular outflow tract') +
+    step(5,'amber','Aspirate CVP if in place','May recover CO2 from RV/RA') +
+    step(6,'amber','CPR if cardiovascular collapse','') +
+    step(7,'blue','Vasopressors for RV support - norepinephrine preferred','') +
+    step(8,'green','CO2 absorbs faster than air - prognosis better than VAE','Continue aggressive resuscitation')
+  );
+
+  return h;
+}
+
+function renderMetabolic(wt) {
+  var h = '';
+
+  h += card('Severe Hyperkalemia', 'K+ > 6.5 or ECG changes', 'red', 'TREAT NOW',
+    step(1,'red','Calcium chloride 1g IV over 2-3 min','Membrane stabilization - does NOT lower K+') +
+    step(2,'red','Sodium bicarbonate',
+      wt ? fmt(wt) + ' mEq IV (1 mEq/kg)' : '1 mEq/kg IV') +
+    step(3,'amber','Regular insulin 10 units IV + D50 50 mL','Shifts K+ intracellularly') +
+    step(4,'amber','Albuterol nebulized or IV','Shifts K+ intracellularly') +
+    step(5,'amber','Furosemide 40 mg IV if volume replete','Eliminates K+') +
+    step(6,'red','Emergent dialysis if refractory','')
+  );
+
+  h += card('Severe Hypoglycemia', 'BG < 50 mg/dL or symptomatic', 'red', 'TREAT NOW',
+    step(1,'red','Dextrose 50% IV immediately',
+      wt ? fmt(wt*0.5) + ' g = ' + fmt(wt*1) + ' mL D50 (0.5 g/kg)' : '25-50 g IV = 50-100 mL D50') +
+    step(2,'amber','Recheck glucose in 15 min','Repeat D50 if still < 70 mg/dL') +
+    step(3,'amber','D10 infusion to maintain BG 140-180 mg/dL','') +
+    step(4,'green','If no IV access - glucagon 1 mg IM','')
+  );
+
+  h += card('LAST - Local Anesthetic Toxicity', 'Seizures, arrhythmia, or cardiac arrest after LA injection', 'red', 'EMERGENCY',
+    step(1,'red','Stop LA injection immediately','') +
+    step(2,'red','Call for help - get Intralipid 20% NOW','') +
+    step(3,'red','Airway - 100% O2 - intubate if seizing','Hyperventilate to prevent hypercapnia') +
+    step(4,'amber','Seizure control - midazolam 1-2 mg IV','Avoid propofol - cardiovascular depressant. Avoid large doses that cause apnea.') +
+    step(5,'red','Intralipid 20% BOLUS',
+      wt ? fmt(wt*1.5) + ' mL IV over 2-3 min (1.5 mL/kg) | May repeat x2 every 5 min' :
+      '1.5 mL/kg IV bolus - repeat x2 q5 min') +
+    step(6,'red','Intralipid 20% INFUSION',
+      wt ? fmt(wt*0.25*60) + ' mL/hr (0.25 mL/kg/min) | Continue 30-60 min after stable' :
+      '0.25 mL/kg/min infusion - continue 30-60 min') +
+    step(7,'red','Modified ACLS if cardiac arrest','Small epi doses 10-100 mcg ONLY. NO vasopressin. NO CCBs. NO beta blockers. NO lidocaine.') +
+    step(8,'amber','Max Intralipid total',
+      wt ? fmt(wt*10) + ' mL in first 30 min' : '10 mL/kg ceiling in first 30 min') +
+    step(9,'green','ECMO if refractory arrest - contact perfusion early','Bupivacaine LAST may need prolonged resuscitation') +
+    step(10,'green','Monitor 4-6 hrs minimum after event','')
+  );
+
+  h += dbox([
+    ['Intralipid bolus (1.5 mL/kg)', wt ? fmt(wt*1.5) + ' mL IV' : 'Enter weight'],
+    ['Intralipid infusion (0.25 mL/kg/min)', wt ? fmt(wt*0.25*60) + ' mL/hr' : 'Enter weight'],
+    ['Max dose (10 mL/kg / 30 min)', wt ? fmt(wt*10) + ' mL' : 'Enter weight']
+  ]);
+
+  h += hotline('ASRA LAST Hotline: 1-855-LAST-001 | lipidrescue.org');
+
+  return h;
+}
+
+function renderOB(wt) {
+  var h = '';
+
+  h += card('High Spinal', 'Total spinal - apnea + hypotension + loss of consciousness', 'red', 'EMERGENCY',
+    step(1,'red','CALL FOR HELP IMMEDIATELY','') +
+    step(2,'red','Intubate immediately - do not wait for apnea to reverse','High spinal = total apnea') +
+    step(3,'red','100% O2 - manual ventilation','') +
+    step(4,'red','Aggressive vasopressor therapy',
+      wt ? 'Phenylephrine: ' + fmt(wt*2) + ' mcg IV push | Ephedrine: ' + fmt1(wt*0.1) + ' mg IV | Epi if collapse: 50-100 mcg IV' :
+      'Phenylephrine 100-200 mcg IV | Ephedrine 5-10 mg IV') +
+    step(5,'red','Rapid IV fluids 1-2 L crystalloid','') +
+    step(6,'amber','Left lateral uterine displacement if pregnant','Prevents aortocaval compression') +
+    step(7,'green','Reassure patient - they are awake but paralyzed','Communicate continuously until unconscious')
+  );
+
+  h += card('Obstetric Hemorrhage', 'Massive postpartum hemorrhage or placenta accreta', 'red', 'ACTIVATE MTP',
+    step(1,'red','Activate massive transfusion protocol - 1:1:1 pRBC:FFP:Plt','') +
+    step(2,'red','Large bore IV x2 - arterial line if not already in','') +
+    step(3,'red','Oxytocin 20-40 units in 1L NS as infusion','NOT IV push - causes vasodilation and hypotension') +
+    step(4,'amber','Methylergonovine 0.2 mg IM','Avoid if hypertensive') +
+    step(5,'amber','Misoprostol 600-1000 mcg PR or SL','') +
+    step(6,'amber','Carboprost 0.25 mg IM q15 min','Avoid in asthma') +
+    step(7,'amber','Tranexamic acid 1g IV over 10 min',
+      wt ? 'Or ' + fmt(wt*15) + ' mg (15 mg/kg) - give as early as possible' : '1g IV - give early') +
+    step(8,'red','Cell saver, massive transfusion, interventional radiology as available','') +
+    step(9,'red','Hysterectomy if medical management fails','')
+  );
+
+  h += card('Uterine Rupture', 'Acute pain + fetal bradycardia + hemorrhage', 'red', 'EMERGENCY C/S',
+    step(1,'red','Immediate general anesthesia - rapid sequence induction','Do NOT attempt regional if hemodynamically unstable') +
+    step(2,'red','RSI',
+      wt ? 'Succinylcholine ' + fmt(wt*1.5) + ' mg IV + Ketamine ' + fmt(wt*1) + '-' + fmt(wt*2) + ' mg IV' :
+      'Succs 1.5 mg/kg IV + Ketamine 1-2 mg/kg IV') +
+    step(3,'red','Massive transfusion protocol immediately','') +
+    step(4,'red','Vasopressors and aggressive fluid resuscitation','') +
+    step(5,'amber','Left uterine displacement until delivery','')
+  );
+
+  return h;
+}
+
+function renderOther(wt) {
+  var h = '';
+
+  h += card('OR Fire', 'Airway or drape fire', 'red', 'CALL FOR HELP',
+    step(1,'red','REMOVE airway from patient immediately','Disconnect ETT or mask from circuit') +
+    step(2,'red','STOP all gases to patient - turn off O2 and N2O','') +
+    step(3,'red','FLOOD field with saline or smother drape fire','') +
+    step(4,'red','Call for CO2 fire extinguisher','Do NOT use halon near patient airway') +
+    step(5,'amber','Evaluate airway for burns - reintubate early before edema','') +
+    step(6,'amber','100% O2 after fire extinguished - assess for inhalation injury','') +
+    step(7,'green','Activate hospital fire protocol if fire spreads','')
+  );
+
+  h += card('Massive Hemorrhage', 'EBL > 1 blood volume or uncontrolled bleeding', 'red', 'ACTIVATE MTP',
+    step(1,'red','Activate massive transfusion protocol immediately','Call blood bank - 1:1:1 ratio pRBC:FFP:Plt') +
+    step(2,'red','Large bore IV x2 minimum - 14-16G','IO access if no IV') +
+    step(3,'red','Tranexamic acid 1g IV over 10 min',
+      wt ? 'Or ' + fmt(wt*15) + ' mg (15 mg/kg) - give EARLY' : '1g IV - give as early as possible') +
+    step(4,'amber','Permissive hypotension MAP 50-65 until surgical control','Avoid excess crystalloid') +
+    step(5,'amber','Calcium chloride 1g IV per 4 units pRBC','Replace ionized calcium depleted by citrate in blood') +
+    step(6,'amber','Fibrinogen concentrate 4g or cryo 10 units if fibrinogen < 1.5','') +
+    step(7,'blue','Warm ALL IV fluids and blood products','Prevent hypothermia-induced coagulopathy') +
+    step(8,'green','TEG or ROTEM guided resuscitation if available','Goal-directed coagulation management')
+  );
+
+  h += card('Acute Transfusion Reaction', 'Hemolytic or anaphylactic transfusion reaction', 'red', 'STOP TRANSFUSION',
+    step(1,'red','STOP transfusion immediately','') +
+    step(2,'red','Maintain IV access with new tubing','Do NOT use same IV tubing') +
+    step(3,'red','Verify patient identity and blood product labels','Most reactions are clerical errors') +
+    step(4,'amber','IV fluids 1-2 L crystalloid - maintain BP and renal perfusion','') +
+    step(5,'amber','Diphenhydramine 25-50 mg IV for allergic reaction','') +
+    step(6,'amber','Epinephrine 0.3 mg IM or 50-100 mcg IV for anaphylactic reaction','') +
+    step(7,'blue','Furosemide to maintain UO > 1 mL/kg/hr','Prevent hemoglobin renal injury') +
+    step(8,'green','Send blood bank sample + blood product + patient ID','DAT, urinalysis, plasma hemoglobin') +
+    step(9,'green','Notify blood bank immediately','')
+  );
+
+  h += card('Power Failure / Machine Failure', 'Loss of ventilator or monitoring', 'red', 'EMERGENCY',
+    step(1,'red','Switch to manual bag ventilation immediately','Disconnect ventilator - bag patient') +
+    step(2,'red','O2 cylinder backup - open cylinder valve','') +
+    step(3,'amber','Maintain anesthesia - switch to TIVA if volatile unavailable','Propofol + opioid infusion') +
+    step(4,'amber','Use backup monitoring - pulse ox + precordial stethoscope','Finger on pulse') +
+    step(5,'green','Call for backup machine or move to backup OR','')
+  );
+
+  h += card('Intraop Stroke', 'New focal deficit or altered consciousness', 'amber', 'URGENT',
+    step(1,'amber','Maintain MAP > 80 mmHg - cerebral perfusion pressure support','') +
+    step(2,'amber','Avoid hypocapnia - maintain PaCO2 35-45 mmHg','') +
+    step(3,'amber','Maintain normoglycemia 140-180 mg/dL','Hyper and hypoglycemia both worsen outcome') +
+    step(4,'amber','Notify neurology and neurosurgery immediately','') +
+    step(5,'blue','tPA contraindicated in perioperative period','Surgical patients excluded from thrombolytics') +
+    step(6,'green','Mechanical thrombectomy may still be option for large vessel occlusion','Discuss urgently with neurology')
+  );
+
+  h += card('Pacemaker or ICD Emergency', 'Intraop device malfunction or inappropriate shock', 'amber', 'URGENT',
+    step(1,'amber','Apply magnet over ICD to suspend tachyarrhythmia detection','Prevents inappropriate shocks from electrocautery') +
+    step(2,'amber','Use bipolar cautery - minimizes electromagnetic interference','') +
+    step(3,'amber','Transcutaneous pacing pads on all pacemaker-dependent patients','Backup if pacemaker is inhibited') +
+    step(4,'green','Magnet over pacemaker converts to asynchronous mode at fixed rate','Rate 85 bpm typically')
+  );
+
+  return h;
+}
+
+function renderAll() {
+  var wt = getWt();
+  var con = document.getElementById('mainContent');
+  var h = '<div style="padding:14px 16px">';
+  if (activeTab === 0) h += renderAirway(wt);
+  else if (activeTab === 1) h += renderCardiac(wt);
+  else if (activeTab === 2) h += renderAnaphylaxis(wt);
+  else if (activeTab === 3) h += renderMH(wt);
+  else if (activeTab === 4) h += renderPulm(wt);
+  else if (activeTab === 5) h += renderMetabolic(wt);
+  else if (activeTab === 6) h += renderOB(wt);
+  else if (activeTab === 7) h += renderOther(wt);
+  h += '</div>';
+  con.innerHTML = h;
+}
+
+renderAll();
+
+</script>
+</body>
+</html>
