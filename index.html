@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AnesRX">
+<meta name="theme-color" content="#0a0f14">
+<title>Anesthesia RX</title>
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0f14;--sf:#111820;--sf2:#182030;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--ac:#00e5a0;--rd:#ff4d6d;--am:#ffb547;--tx:#e8f0f8;--mu:rgba(232,240,248,0.45);--fa:rgba(232,240,248,0.18)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none;background:var(--bg)}
+body{font-family:'DM Mono',monospace;color:var(--tx);display:flex;flex-direction:column;max-width:430px;margin:0 auto}
+.topbar{position:sticky;top:0;z-index:100;padding:calc(env(safe-area-inset-top,0px) + 14px) 20px 14px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.app-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.5px}
+.app-title span{color:var(--ac)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.edit-btn{font-family:'DM Mono',monospace;font-size:11px;padding:6px 12px;border-radius:999px;border:1px solid var(--bd2);background:transparent;color:var(--mu);cursor:pointer}
+.edit-btn.active{border-color:var(--am);color:var(--am);background:rgba(255,181,71,0.08)}
+.progress-ring{position:relative;width:40px;height:40px}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring .track{fill:none;stroke:var(--sf2);stroke-width:3}
+.progress-ring .fill{fill:none;stroke:var(--ac);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 0.4s}
+.ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ac)}
+.phase-tabs{display:flex;overflow-x:auto;gap:6px;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--bd);scrollbar-width:none}
+.phase-tabs::-webkit-scrollbar{display:none}
+.phase-tab{flex-shrink:0;padding:7px 14px;border-radius:999px;border:1px solid var(--bd2);background:transparent;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.phase-tab .pip{width:6px;height:6px;border-radius:50%;background:var(--fa);flex-shrink:0}
+.phase-tab.active{background:var(--ac);border-color:var(--ac);color:#000}
+.phase-tab.active .pip{background:rgba(0,0,0,0.35)}
+.phase-tab.done .pip{background:var(--ac)}
+.phase-tab.partial .pip{background:var(--am)}
+.add-phase-tab{flex-shrink:0;padding:7px 14px;border-radius:999px;border:1px dashed var(--bd2);background:transparent;font-family:'DM Mono',monospace;font-size:11px;color:var(--fa);cursor:pointer;white-space:nowrap;display:none}
+.add-phase-tab.visible{display:flex;align-items:center;gap:4px}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.section{display:none}
+.section.active{display:block}
+.group{margin-bottom:20px}
+.group-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.group-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mu)}
+.group-actions{display:none;gap:4px;margin-left:auto}
+.group-line{flex:1;height:1px;background:var(--bd)}
+.mini-btn{font-size:10px;padding:2px 8px;border-radius:4px;border:1px solid var(--bd2);background:transparent;color:var(--mu);cursor:pointer;font-family:'DM Mono',monospace;white-space:nowrap}
+.mini-btn.danger{color:var(--rd);border-color:rgba(255,77,109,0.3)}
+.item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--sf);margin-bottom:6px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.item:active{background:var(--sf2)}
+.item.urgent{border-color:rgba(255,77,109,0.35);background:rgba(255,77,109,0.05)}
+.item.urgent .check-box{border-color:var(--rd)}
+.item.checked{opacity:0.42}
+.item.checked .label-text{text-decoration:line-through;color:var(--mu)}
+.item.checked .check-box{background:var(--ac);border-color:var(--ac)}
+.check-box{width:20px;height:20px;min-width:20px;border-radius:5px;border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.check-icon{display:none;width:11px;height:9px}
+.check-icon path{fill:none;stroke:#000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.item.checked .check-icon{display:block}
+.label-wrap{flex:1;min-width:0}
+.label-text{font-size:13px;line-height:1.45}
+.note-text{font-size:11px;color:var(--mu);margin-top:2px;line-height:1.4}
+.urgent-badge{font-size:9px;background:rgba(255,77,109,0.15);color:var(--rd);border:1px solid rgba(255,77,109,0.3);border-radius:4px;padding:1px 5px;display:inline-block;margin-right:4px;vertical-align:middle}
+.item-del{display:none;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1px solid rgba(255,77,109,0.3);background:transparent;color:var(--rd);font-size:18px;cursor:pointer;flex-shrink:0;line-height:1}
+.item-utoggle{display:none;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:1px solid var(--bd2);background:transparent;color:var(--am);font-size:14px;cursor:pointer;flex-shrink:0;line-height:1}
+.edit-mode .item-del{display:flex}
+.edit-mode .item-utoggle{display:flex}
+.edit-mode .item{cursor:default}
+.edit-mode .group-actions{display:flex}
+.add-item-row{display:none;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px dashed var(--bd2);margin-bottom:6px}
+.add-item-row.visible{display:flex}
+.add-item-input{flex:1;background:transparent;border:none;outline:none;font-family:'DM Mono',monospace;font-size:13px;color:var(--tx);caret-color:var(--ac)}
+.add-item-input::placeholder{color:var(--fa)}
+.add-item-btn{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid rgba(0,229,160,0.3);background:transparent;color:var(--ac);cursor:pointer;white-space:nowrap}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.7);align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{width:100%;max-width:430px;background:var(--sf);border-radius:20px 20px 0 0;padding:20px 20px calc(env(safe-area-inset-bottom,0px) + 24px);border-top:1px solid var(--bd2)}
+.modal-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px}
+.modal-input{width:100%;background:var(--sf2);border:1px solid var(--bd2);border-radius:10px;padding:11px 14px;font-family:'DM Mono',monospace;font-size:13px;color:var(--tx);outline:none;margin-bottom:10px;caret-color:var(--ac)}
+.modal-input::placeholder{color:var(--fa)}
+.modal-row{display:flex;gap:8px;margin-bottom:10px;align-items:center}
+.modal-label{font-size:12px;color:var(--mu);flex:1}
+.modal-toggle{width:44px;height:24px;border-radius:999px;background:var(--sf2);border:1px solid var(--bd2);cursor:pointer;position:relative}
+.modal-toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--mu);transition:transform 0.2s}
+.modal-toggle.on{background:rgba(255,77,109,0.3);border-color:rgba(255,77,109,0.4)}
+.modal-toggle.on::after{transform:translateX(20px);background:var(--rd)}
+.modal-btns{display:flex;gap:8px;margin-top:6px}
+.modal-btn{flex:1;padding:12px;border-radius:10px;font-family:'DM Mono',monospace;font-size:13px;cursor:pointer}
+.modal-btn.cancel{background:transparent;border:1px solid var(--bd2);color:var(--mu)}
+.modal-btn.confirm{background:var(--ac);border:1px solid var(--ac);color:#000;font-weight:500}
+.footer{padding:12px 20px calc(env(safe-area-inset-bottom,0px) + 12px);border-top:1px solid var(--bd);background:var(--bg);display:flex;gap:8px}
+.btn{flex:1;padding:12px;border-radius:10px;border:1px solid var(--bd2);background:var(--sf);font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);cursor:pointer}
+.btn-reset{color:var(--rd);border-color:rgba(255,77,109,0.3)}
+.btn-accent{color:var(--ac);border-color:rgba(0,229,160,0.3)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="app-title">Anesthesia<span>RX</span></div>
+  <div class="topbar-right">
+    <button class="edit-btn" id="editBtn" onclick="toggleEdit()">Edit</button>
+    <div class="progress-ring">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle class="track" cx="20" cy="20" r="17"/>
+        <circle class="fill" id="ringFill" cx="20" cy="20" r="17" stroke-dasharray="106.8" stroke-dashoffset="106.8"/>
+      </svg>
+      <div class="ring-label" id="ringLabel">0%</div>
+    </div>
+  </div>
+</div>
+<div class="phase-tabs" id="phaseTabs">
+  <button class="add-phase-tab" id="addPhaseTab" onclick="openAddPhase()">+ phase</button>
+</div>
+<div class="content" id="mainContent"></div>
+<div class="footer">
+  <button class="btn btn-reset" onclick="resetAll()">Reset</button>
+  <button class="btn btn-accent" onclick="nextPhase()">Next</button>
+</div>
+<div class="modal-overlay" id="itemModal">
+  <div class="modal">
+    <div class="modal-title" id="itemModalTitle">Edit item</div>
+    <input class="modal-input" id="itemLabel" placeholder="Item text">
+    <input class="modal-input" id="itemNote" placeholder="Note (optional)">
+    <div class="modal-row">
+      <span class="modal-label">Urgent</span>
+      <div class="modal-toggle" id="urgentToggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('itemModal')">Cancel</button>
+      <button class="modal-btn confirm" onclick="saveItem()">Save</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="groupModal">
+  <div class="modal">
+    <div class="modal-title">Add group</div>
+    <input class="modal-input" id="groupName" placeholder="Group name">
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('groupModal')">Cancel</button>
+      <button class="modal-btn confirm" onclick="saveGroup()">Add</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="phaseModal">
+  <div class="modal">
+    <div class="modal-title">Add phase</div>
+    <input class="modal-input" id="phaseName" placeholder="Phase name">
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('phaseModal')">Cancel</button>
+      <button class="modal-btn confirm" onclick="savePhase()">Add</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="renameModal">
+  <div class="modal">
+    <div class="modal-title" id="renameTitle">Rename</div>
+    <input class="modal-input" id="renameVal" placeholder="New name">
+    <div class="modal-btns">
+      <button class="modal-btn cancel" onclick="closeModal('renameModal')">Cancel</button>
+      <button class="modal-btn confirm" onclick="saveRename()">Save</button>
+    </div>
+  </div>
+</div>
+<script>
+
+var DEFAULT = [
+  {id:'p1',label:'Post-induction',groups:[
+    {title:'Airway confirmed',items:[
+      {l:'ETCO2 waveform confirmed',n:'Bilateral breath sounds'},
+      {l:'ETT depth noted + secured',n:'Document cm at teeth in EPIC'},
+      {l:'Eyes taped / lubricated',n:'Esp. prone or long cases'},
+      {l:'Bite block placed if needed'},
+      {l:'OG/NG placed if ordered - document output'}
+    ]},
+    {title:'Vent settings',items:[
+      {l:'TV 6-8 mL/kg IBW, RR set, PEEP 5',n:'Adjust per case'},
+      {l:'Peak/plateau pressures OK',n:'Alert if Ppeak > 30'},
+      {l:'SpO2 and EtCO2 trending well',n:'Goal EtCO2 35-45'}
+    ]},
+    {title:'Lines and monitoring',items:[
+      {l:'Art line zeroed + waveform good',n:'If placed'},
+      {l:'CVP / A-line documentation started in EPIC'},
+      {l:'Foley baseline output noted',n:'Goal >= 0.5 mL/kg/hr'},
+      {l:'Temp probe placed - baseline documented'},
+      {l:'Bear Hugger / warming blanket ACTIVE',u:1,n:'Start early - rewarm is slow'}
+    ]}
+  ]},
+  {id:'p2',label:'Drugs',groups:[
+    {title:'Antibiotics',items:[
+      {l:'Prophylactic ABX within 60 min of incision',u:1,n:'Cefazolin most common; re-dose 4 hrs or EBL 1500 mL'},
+      {l:'Re-dose reminder set for long cases'},
+      {l:'Allergies cross-checked'}
+    ]},
+    {title:'Steroids',items:[
+      {l:'Dexamethasone 4-8 mg IV - give EARLY',n:'At induction not at end'},
+      {l:'Stress-dose steroids if adrenal insufficiency',n:'Hydrocortisone 50-100 mg'}
+    ]},
+    {title:'Multimodal analgesia',items:[
+      {l:'Acetaminophen 1g IV',n:'Max 4g/24hr; avoid liver failure'},
+      {l:'Ketorolac 15-30 mg IV near end',n:'Avoid if renal/GI risk'},
+      {l:'Ketamine 0.1-0.5 mg/kg opioid-sparing'},
+      {l:'Lidocaine infusion if ordered',n:'1.5 mg/kg load then 1.5 mg/kg/hr'},
+      {l:'Dexmedetomidine if ordered'},
+      {l:'Opioid plan documented for emergence/PACU'},
+      {l:'Regional block charted in EPIC',n:'Adductor canal, TAP, popliteal, etc.'}
+    ]},
+    {title:'PONV prophylaxis',items:[
+      {l:'Ondansetron 4 mg - 30-60 min before end',n:'Apfel >= 2 use dual/triple therapy'},
+      {l:'Scopolamine patch confirmed if high-risk'},
+      {l:'Full bundle: dex + zofran +/- scop +/- TIVA'}
+    ]},
+    {title:'Fluids and pressors',items:[
+      {l:'Fluid type + rate confirmed - running total in EPIC'},
+      {l:'Blood products ordered if needed'},
+      {l:'Vasopressor drip labeled + running if needed',n:'Phenylephrine, norepi, vasopressin'}
+    ]}
+  ]},
+  {id:'p3',label:'EPIC',groups:[
+    {title:'Required documentation',items:[
+      {l:'Anesthesia type + providers documented'},
+      {l:'Induction agents - drug, dose, time charted'},
+      {l:'Intubation: attempt #, blade, ETT size/depth'},
+      {l:'ALL meds - drug, dose, route, time real-time',u:1},
+      {l:'Fluids running total updated'},
+      {l:'Urine output entered'},
+      {l:'Labs reviewed - abnormals noted',n:'BMP, CBC, coags, ABG as applicable'},
+      {l:'Positioning documented'},
+      {l:'Padding + pressure points charted'},
+      {l:'Temperature - initial and ongoing'},
+      {l:'Intraop events documented',n:'Hypotension, laryngospasm, etc.'},
+      {l:'EBL updated throughout'}
+    ]},
+    {title:'Labs mid-case',items:[
+      {l:'ABG if art line or complex case',n:'pH, PaO2, PaCO2, BE, lactate'},
+      {l:'Glucose check',n:'Diabetics, long cases, peds'},
+      {l:'H&H if significant EBL'},
+      {l:'Coags if anticoag hx or massive transfusion'},
+      {l:'ACT if heparin given',n:'Cardiac/vascular cases'}
+    ]}
+  ]},
+  {id:'p4',label:'Emergence',groups:[
+    {title:'Timing - watch the field',items:[
+      {l:'Identify closure stage - alert at last layer',n:'Do not wait for dressings'},
+      {l:'Volatile agent down / TIVA off',n:'Increase FGF to blow off gas faster'},
+      {l:'NMB reversal given',n:'Neostig 0.04-0.07 mg/kg + glyco OR sugammadex'},
+      {l:'TOF ratio >= 0.9 confirmed',u:1,n:'Quantitative monitoring - do not skip'},
+      {l:'Final opioid dose for smooth emergence'},
+      {l:'Lidocaine 1 mg/kg IV if bucking risk',n:'Optional'}
+    ]},
+    {title:'Extubation criteria - ALL must pass',items:[
+      {l:'Awake - eyes open following commands',u:1},
+      {l:'Sustained head lift > 5 sec OR strong grip'},
+      {l:'Tidal volume > 5-6 mL/kg IBW spontaneous'},
+      {l:'RR 10-20 regular'},
+      {l:'SpO2 >= 96% on <= 50% FiO2'},
+      {l:'ETCO2 normalizing on spontaneous breaths'},
+      {l:'Hemodynamically stable'},
+      {l:'Leak test done if airway edema concern',n:'Post-ENT, prone, massive fluids'}
+    ]},
+    {title:'Suction and backup airway',items:[
+      {l:'Suction working - Yankauer at bedside',u:1},
+      {l:'BVM connected and tested'},
+      {l:'Oral airway / NPA at bedside'},
+      {l:'Video laryngoscope + LMA accessible'},
+      {l:'Tape/sutures cut if surgeon secured tube'}
+    ]},
+    {title:'Post-extubation',items:[
+      {l:'Supplemental O2 applied immediately',n:'NRB or simple mask'},
+      {l:'PACU handoff talking points ready',n:'Case summary, events, pain plan, PONV Rx'},
+      {l:'PACU orders in EPIC - pain, antiemetics, vitals'},
+      {l:'Anesthesia record signed or in progress'}
+    ]}
+  ]},
+  {id:'p5',label:'Next Pt',groups:[
+    {title:'Read the chart',items:[
+      {l:'H&P, PMHx, PSHx, meds, allergies reviewed'},
+      {l:'Airway assessment: Mallampati, ROM, thyromental, BMI'},
+      {l:'Labs reviewed',n:'CBC, BMP, coags, echo, PFTs as needed'},
+      {l:'Anesthesia plan decided',n:'GA vs regional vs MAC'},
+      {l:'Difficult airway / backup plan identified'},
+      {l:'Consent confirmed'},
+      {l:'NPO status confirmed'},
+      {l:'GLP-1 status noted',n:'Extended fasting risk'}
+    ]},
+    {title:'Draw drugs',items:[
+      {l:'Propofol / induction agent - drawn + labeled',u:1},
+      {l:'Succinylcholine - drawn + labeled',u:1},
+      {l:'Rocuronium or NMB - drawn + labeled'},
+      {l:'Fentanyl / opioid - drawn + labeled'},
+      {l:'Ephedrine 5 mg/mL - ready'},
+      {l:'Phenylephrine / vasopressor - ready'},
+      {l:'Atropine - drawn + labeled'},
+      {l:'Lidocaine for intubation / topicalization'},
+      {l:'Antiemetics - ondansetron and dex drawn'},
+      {l:'Emergency drugs verified',n:'Epi + atropine minimum'}
+    ]},
+    {title:'Airway setup',items:[
+      {l:'ETT size selected - cuffed correct ID',n:'Have one size above/below'},
+      {l:'Laryngoscope - light bright blade tight'},
+      {l:'Video laryngoscope charged + on'},
+      {l:'Stylet in ETT'},
+      {l:'Cuff checked - 10cc syringe attached'},
+      {l:'Tape / ETT holder ready'},
+      {l:'LMA correct size backup'},
+      {l:'Difficult airway cart location confirmed'},
+      {l:'Suction checked + functional'},
+      {l:'Circuit / machine check done',n:'If new room'}
+    ]},
+    {title:'Room and equipment',items:[
+      {l:'Machine checked - O2, agent, vaporizer, circuit'},
+      {l:'All monitors working',n:'SpO2, EtCO2, NIBP, EKG, temp'},
+      {l:'IV access plan confirmed',n:'Gauge, site, length for procedure'},
+      {l:'Bear Hugger / warming set up'},
+      {l:'Positioning equipment ready',n:'Bean bag, axillary roll, etc.'},
+      {l:'Cell saver available if high EBL expected'}
+    ]}
+  ]},
+  {id:'p6',label:'Clean Up',groups:[
+    {title:'Before you relax',items:[
+      {l:'All sharps disposed in sharps container',u:1},
+      {l:'Unused drugs discarded per protocol',n:'Witnessed waste if required'},
+      {l:'Drug waste documented - EPIC / Pyxis'},
+      {l:'Controlled substances - waste witnessed + signed',u:1},
+      {l:'Anesthesia cart restocked'},
+      {l:'Vaporizer and gas OFF'},
+      {l:'Circuit disconnected + disposed / cleaned'},
+      {l:'Blood products / fluids documented + disposed'},
+      {l:'Room ready for turnover - anesthesia side clean'}
+    ]}
+  ]}
+];
+
+function loadPhases() {
+  try { var s = localStorage.getItem('arx4'); if (s) return JSON.parse(s); } catch(e) {}
+  return JSON.parse(JSON.stringify(DEFAULT));
+}
+function savePhases() { localStorage.setItem('arx4', JSON.stringify(phases)); }
+function loadChecks() {
+  try { return JSON.parse(localStorage.getItem('arx4c') || '{}'); } catch(e) { return {}; }
+}
+function saveChecks() { localStorage.setItem('arx4c', JSON.stringify(checks)); }
+
+var phases = loadPhases();
+var checks = loadChecks();
+var activeIdx = 0;
+var editMode = false;
+var ctx = {};
+
+function ikey(pi, gi, ii) { return phases[pi].id + '-' + gi + '-' + ii; }
+function genId() { return 'x' + Date.now().toString(36); }
+
+function totalItems() {
+  var t = 0;
+  for (var i = 0; i < phases.length; i++)
+    for (var j = 0; j < phases[i].groups.length; j++)
+      t += phases[i].groups[j].items.length;
+  return t;
+}
+function checkedCount() {
+  var c = 0, vals = Object.keys(checks);
+  for (var i = 0; i < vals.length; i++) if (checks[vals[i]]) c++;
+  return c;
+}
+
+function updateRing() {
+  var tot = totalItems(), don = checkedCount();
+  var pct = tot ? Math.round(don / tot * 100) : 0;
+  var circ = 106.8;
+  document.getElementById('ringFill').style.strokeDashoffset = circ - circ * pct / 100;
+  document.getElementById('ringLabel').textContent = pct + '%';
+  var tabs = document.querySelectorAll('.phase-tab');
+  for (var pi = 0; pi < phases.length; pi++) {
+    var tab = tabs[pi]; if (!tab) continue;
+    var t = 0, d = 0;
+    for (var gi = 0; gi < phases[pi].groups.length; gi++)
+      for (var ii = 0; ii < phases[pi].groups[gi].items.length; ii++) {
+        t++;
+        if (checks[ikey(pi, gi, ii)]) d++;
+      }
+    tab.classList.remove('done', 'partial');
+    if (d === t && t > 0) tab.classList.add('done');
+    else if (d > 0) tab.classList.add('partial');
+  }
+}
+
+function toggleEdit() {
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  var btn = document.getElementById('editBtn');
+  btn.textContent = editMode ? 'Done' : 'Edit';
+  btn.classList.toggle('active', editMode);
+  document.getElementById('addPhaseTab').classList.toggle('visible', editMode);
+  var rows = document.querySelectorAll('.add-item-row');
+  for (var i = 0; i < rows.length; i++) rows[i].classList.toggle('visible', editMode);
+}
+
+function renderAll() { renderTabs(); renderContent(); updateRing(); }
+
+function renderTabs() {
+  var con = document.getElementById('phaseTabs');
+  var existing = con.querySelectorAll('.phase-tab');
+  for (var i = 0; i < existing.length; i++) existing[i].remove();
+  var addBtn = document.getElementById('addPhaseTab');
+  for (var pi = 0; pi < phases.length; pi++) {
+    (function(idx) {
+      var btn = document.createElement('button');
+      btn.className = 'phase-tab' + (idx === activeIdx ? ' active' : '');
+      btn.setAttribute('data-pi', idx);
+      btn.innerHTML = '<span class="pip"></span>' + phases[idx].label;
+      btn.onclick = function() {
+        if (editMode) { openRenamePhase(idx); return; }
+        switchPhase(idx);
+      };
+      con.insertBefore(btn, addBtn);
+    })(pi);
+  }
+  updateRing();
+}
+
+function renderContent() {
+  var con = document.getElementById('mainContent');
+  con.innerHTML = '';
+  for (var pi = 0; pi < phases.length; pi++) {
+    (function(pidx) {
+      var sec = document.createElement('div');
+      sec.className = 'section' + (pidx === activeIdx ? ' active' : '');
+      sec.id = 'sec' + pidx;
+      for (var gi = 0; gi < phases[pidx].groups.length; gi++) {
+        (function(gidx) {
+          var gd = document.createElement('div');
+          gd.className = 'group';
+          var hd = document.createElement('div');
+          hd.className = 'group-header';
+          hd.innerHTML = '<div class="group-label">' + phases[pidx].groups[gidx].title + '</div>' +
+            '<div class="group-actions">' +
+            '<button class="mini-btn" onclick="openRenameGroup(' + pidx + ',' + gidx + ')">rename</button>' +
+            '<button class="mini-btn danger" onclick="deleteGroup(' + pidx + ',' + gidx + ')">delete</button>' +
+            '</div><div class="group-line"></div>';
+          gd.appendChild(hd);
+          for (var ii = 0; ii < phases[pidx].groups[gidx].items.length; ii++) {
+            gd.appendChild(makeItem(pidx, gidx, ii));
+          }
+          var ar = document.createElement('div');
+          ar.className = 'add-item-row' + (editMode ? ' visible' : '');
+          ar.innerHTML = '<input class="add-item-input" placeholder="Add item...">' +
+            '<button class="add-item-btn" onclick="quickAdd(' + pidx + ',' + gidx + ',this)">Add</button>';
+          ar.querySelector('input').addEventListener('keydown', (function(p, g) {
+            return function(ev) { if (ev.keyCode === 13) quickAdd(p, g, this.nextElementSibling); };
+          })(pidx, gidx));
+          gd.appendChild(ar);
+          sec.appendChild(gd);
+        })(gi);
+      }
+      var agr = document.createElement('div');
+      agr.className = 'add-item-row' + (editMode ? ' visible' : '');
+      agr.style.borderColor = 'rgba(0,229,160,0.2)';
+      agr.innerHTML = '<button class="add-item-btn" style="flex:1" onclick="openAddGroup(' + pidx + ')">+ Add group</button>';
+      sec.appendChild(agr);
+      con.appendChild(sec);
+    })(pi);
+  }
+}
+
+function makeItem(pi, gi, ii) {
+  var it = phases[pi].groups[gi].items[ii];
+  var k = ikey(pi, gi, ii);
+  var row = document.createElement('div');
+  row.className = 'item' + (it.u ? ' urgent' : '') + (checks[k] ? ' checked' : '');
+  row.innerHTML =
+    '<button class="item-utoggle" onclick="toggleUrgent(event,' + pi + ',' + gi + ',' + ii + ')">!</button>' +
+    '<div class="check-box"><svg class="check-icon" viewBox="0 0 11 9"><path d="M1 4.5L4 7.5L10 1"/></svg></div>' +
+    '<div class="label-wrap">' +
+      '<div class="label-text">' + (it.u ? '<span class="urgent-badge">URGENT</span>' : '') + esc(it.l) + '</div>' +
+      (it.n ? '<div class="note-text">' + esc(it.n) + '</div>' : '') +
+    '</div>' +
+    '<button class="item-del" onclick="deleteItem(event,' + pi + ',' + gi + ',' + ii + ')">x</button>';
+  row.addEventListener('click', (function(p, g, i2, k2) {
+    return function(ev) {
+      if (editMode) {
+        if (ev.target.closest('.item-del') || ev.target.closest('.item-utoggle')) return;
+        openEditItem(p, g, i2);
+        return;
+      }
+      checks[k2] = !checks[k2];
+      row.classList.toggle('checked', checks[k2]);
+      saveChecks();
+      updateRing();
+    };
+  })(pi, gi, ii, k));
+  return row;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function switchPhase(pi) {
+  activeIdx = pi;
+  var tabs = document.querySelectorAll('.phase-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('active', i === pi);
+  var secs = document.querySelectorAll('.section');
+  for (var i = 0; i < secs.length; i++) secs[i].classList.toggle('active', i === pi);
+  document.getElementById('mainContent').scrollTop = 0;
+}
+
+function nextPhase() {
+  var n = (activeIdx + 1) % phases.length;
+  switchPhase(n);
+  var tab = document.querySelector('.phase-tab[data-pi="' + n + '"]');
+  if (tab) tab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkboxes?')) return;
+  checks = {};
+  saveChecks();
+  var items = document.querySelectorAll('.item');
+  for (var i = 0; i < items.length; i++) items[i].classList.remove('checked');
+  updateRing();
+}
+
+function quickAdd(pi, gi, btn) {
+  var inp = btn.previousElementSibling;
+  var v = inp.value.trim();
+  if (!v) return;
+  phases[pi].groups[gi].items.push({l: v});
+  savePhases();
+  inp.value = '';
+  var sec = document.getElementById('sec' + pi);
+  var grps = sec.querySelectorAll('.group');
+  var gd = grps[gi];
+  var ii = phases[pi].groups[gi].items.length - 1;
+  var ar = gd.querySelector('.add-item-row');
+  gd.insertBefore(makeItem(pi, gi, ii), ar);
+  updateRing();
+}
+
+function openEditItem(pi, gi, ii) {
+  var it = phases[pi].groups[gi].items[ii];
+  ctx = {t:'edit', pi:pi, gi:gi, ii:ii};
+  document.getElementById('itemModalTitle').textContent = 'Edit item';
+  document.getElementById('itemLabel').value = it.l || '';
+  document.getElementById('itemNote').value = it.n || '';
+  document.getElementById('urgentToggle').classList.toggle('on', !!it.u);
+  openModal('itemModal');
+}
+
+function saveItem() {
+  var l = document.getElementById('itemLabel').value.trim();
+  if (!l) return;
+  var n = document.getElementById('itemNote').value.trim();
+  var u = document.getElementById('urgentToggle').classList.contains('on') ? 1 : 0;
+  var pi = ctx.pi, gi = ctx.gi, ii = ctx.ii;
+  phases[pi].groups[gi].items[ii] = {l:l, n:n||undefined, u:u||undefined};
+  savePhases();
+  var sec = document.getElementById('sec' + pi);
+  var gd = sec.querySelectorAll('.group')[gi];
+  var old = gd.querySelectorAll('.item')[ii];
+  gd.replaceChild(makeItem(pi, gi, ii), old);
+  closeModal('itemModal');
+  updateRing();
+}
+
+function deleteItem(ev, pi, gi, ii) {
+  ev.stopPropagation();
+  if (!confirm('Delete this item?')) return;
+  phases[pi].groups[gi].items.splice(ii, 1);
+  savePhases();
+  checks = {};
+  saveChecks();
+  renderContent();
+  updateRing();
+}
+
+function toggleUrgent(ev, pi, gi, ii) {
+  ev.stopPropagation();
+  var it = phases[pi].groups[gi].items[ii];
+  it.u = it.u ? 0 : 1;
+  savePhases();
+  var sec = document.getElementById('sec' + pi);
+  var gd = sec.querySelectorAll('.group')[gi];
+  var old = gd.querySelectorAll('.item')[ii];
+  gd.replaceChild(makeItem(pi, gi, ii), old);
+}
+
+function openAddGroup(pi) {
+  ctx = {pi:pi};
+  document.getElementById('groupName').value = '';
+  openModal('groupModal');
+}
+
+function saveGroup() {
+  var n = document.getElementById('groupName').value.trim();
+  if (!n) return;
+  phases[ctx.pi].groups.push({title:n, items:[]});
+  savePhases();
+  closeModal('groupModal');
+  renderContent();
+  updateRing();
+}
+
+function deleteGroup(pi, gi) {
+  if (!confirm('Delete group "' + phases[pi].groups[gi].title + '"?')) return;
+  phases[pi].groups.splice(gi, 1);
+  savePhases();
+  checks = {};
+  saveChecks();
+  renderContent();
+  updateRing();
+}
+
+function openAddPhase() {
+  document.getElementById('phaseName').value = '';
+  openModal('phaseModal');
+}
+
+function savePhase() {
+  var n = document.getElementById('phaseName').value.trim();
+  if (!n) return;
+  phases.push({id:genId(), label:n, groups:[]});
+  savePhases();
+  closeModal('phaseModal');
+  renderAll();
+  switchPhase(phases.length - 1);
+}
+
+function openRenamePhase(pi) {
+  ctx = {t:'rp', pi:pi};
+  document.getElementById('renameTitle').textContent = 'Rename phase';
+  document.getElementById('renameVal').value = phases[pi].label;
+  openModal('renameModal');
+}
+
+function openRenameGroup(pi, gi) {
+  ctx = {t:'rg', pi:pi, gi:gi};
+  document.getElementById('renameTitle').textContent = 'Rename group';
+  document.getElementById('renameVal').value = phases[pi].groups[gi].title;
+  openModal('renameModal');
+}
+
+function saveRename() {
+  var v = document.getElementById('renameVal').value.trim();
+  if (!v) return;
+  if (ctx.t === 'rp') { phases[ctx.pi].label = v; savePhases(); renderTabs(); }
+  else { phases[ctx.pi].groups[ctx.gi].title = v; savePhases(); renderContent(); }
+  closeModal('renameModal');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  var inp = document.getElementById(id).querySelector('input');
+  if (inp) setTimeout(function() { inp.focus(); }, 100);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  ctx = {};
+}
+
+var overlays = document.querySelectorAll('.modal-overlay');
+for (var oi = 0; oi < overlays.length; oi++) {
+  overlays[oi].addEventListener('click', (function(el) {
+    return function(e) { if (e.target === el) closeModal(el.id); };
+  })(overlays[oi]));
+}
+
+document.addEventListener('keydown', function(e) {
+  var k = e.keyCode;
+  if (k === 27) {
+    var mods = document.querySelectorAll('.modal-overlay.open');
+    for (var i = 0; i < mods.length; i++) closeModal(mods[i].id);
+  }
+  if (k === 13) {
+    if (document.getElementById('renameModal').classList.contains('open')) saveRename();
+    else if (document.getElementById('groupModal').classList.contains('open')) saveGroup();
+    else if (document.getElementById('phaseModal').classList.contains('open')) savePhase();
+    else if (document.getElementById('itemModal').classList.contains('open')) saveItem();
+  }
+});
+
+renderAll();
+
+</script>
+</body>
+</html>
