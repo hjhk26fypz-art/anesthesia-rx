@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MachineRX">
+<meta name="theme-color" content="#0a0f14">
+<title>Machine Checkout</title>
+<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0f14;--sf:#111820;--sf2:#182030;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--ac:#00e5a0;--rd:#ff4d6d;--am:#ffb547;--bl:#4da6ff;--tx:#e8f0f8;--mu:rgba(232,240,248,0.45);--fa:rgba(232,240,248,0.18)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none;background:var(--bg)}
+body{font-family:'DM Mono',monospace;color:var(--tx);display:flex;flex-direction:column;max-width:430px;margin:0 auto}
+.topbar{position:sticky;top:0;z-index:100;padding:0 16px 12px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.topbar-inner{display:flex;align-items:center;justify-content:space-between;width:100%;padding-top:calc(env(safe-area-inset-top, 44px) + 8px)}
+.app-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.app-title span{color:var(--ac)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.reset-btn{font-size:11px;padding:5px 12px;border-radius:999px;border:1px solid var(--bd2);background:transparent;color:var(--mu);cursor:pointer;font-family:'DM Mono',monospace}
+.progress-ring{position:relative;width:40px;height:40px}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring .track{fill:none;stroke:var(--sf2);stroke-width:3}
+.progress-ring .fill{fill:none;stroke:var(--ac);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 0.4s}
+.ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ac)}
+.phase-tabs{display:flex;overflow-x:auto;gap:0;background:var(--sf);border-bottom:1px solid var(--bd);scrollbar-width:none}
+.phase-tabs::-webkit-scrollbar{display:none}
+.phase-tab{flex-shrink:0;padding:10px 14px;font-family:'DM Mono',monospace;font-size:10px;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;background:transparent;border-top:none;border-left:none;border-right:none}
+.phase-tab .pip{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--fa);margin-right:5px;vertical-align:middle}
+.phase-tab.active{color:var(--ac);border-bottom-color:var(--ac)}
+.phase-tab.done .pip{background:var(--ac)}
+.phase-tab.partial .pip{background:var(--am)}
+.content{flex:1;overflow-y:auto;padding:0 0 calc(env(safe-area-inset-bottom,0px)+16px)}
+.section{display:none;padding:14px 16px}
+.section.active{display:block}
+.sec-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mu);margin-bottom:10px;margin-top:4px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--bd)}
+.item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--sf);margin-bottom:6px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.item:active{background:var(--sf2)}
+.item.urgent{border-color:rgba(255,77,109,0.35);background:rgba(255,77,109,0.05)}
+.item.urgent .check-box{border-color:var(--rd)}
+.item.checked{opacity:0.42}
+.item.checked .label-text{text-decoration:line-through;color:var(--mu)}
+.item.checked .check-box{background:var(--ac);border-color:var(--ac)}
+.check-box{width:20px;height:20px;min-width:20px;border-radius:5px;border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.check-icon{display:none;width:11px;height:9px}
+.check-icon path{fill:none;stroke:#000;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.item.checked .check-icon{display:block}
+.label-wrap{flex:1;min-width:0}
+.label-text{font-size:13px;line-height:1.45}
+.note-text{font-size:11px;color:var(--mu);margin-top:2px;line-height:1.4}
+.urgent-badge{font-size:9px;background:rgba(255,77,109,0.15);color:var(--rd);border:1px solid rgba(255,77,109,0.3);border-radius:4px;padding:1px 5px;display:inline-block;margin-right:4px;vertical-align:middle}
+.footer{padding:12px 20px calc(env(safe-area-inset-bottom,0px)+12px);border-top:1px solid var(--bd);background:var(--bg);display:flex;gap:8px}
+.btn{flex:1;padding:12px;border-radius:10px;border:1px solid var(--bd2);background:var(--sf);font-family:'DM Mono',monospace;font-size:12px;color:var(--mu);cursor:pointer}
+.btn-reset{color:var(--rd);border-color:rgba(255,77,109,0.3)}
+.btn-accent{color:var(--ac);border-color:rgba(0,229,160,0.3)}
+.fda-banner{background:rgba(77,166,255,0.08);border:1px solid rgba(77,166,255,0.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--bl);line-height:1.5}
+
+/* Safe area fix for iPhone PWA */
+.topbar {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 10px) !important;
+  padding-bottom: 10px !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+  <div class="app-title">Machine<span>RX</span></div>
+  <div class="topbar-right">
+    <button class="reset-btn" onclick="resetAll()">New Case</button>
+    <div class="progress-ring">
+      <svg width="40" height="40" viewBox="0 0 40 40">
+        <circle class="track" cx="20" cy="20" r="17"/>
+        <circle class="fill" id="ringFill" cx="20" cy="20" r="17" stroke-dasharray="106.8" stroke-dashoffset="106.8"/>
+      </svg>
+      <div class="ring-label" id="ringLabel">0%</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="phase-tabs" id="phaseTabs"></div>
+<div class="content" id="mainContent"></div>
+
+<div class="footer">
+  <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
+  <button class="btn btn-accent" onclick="nextPhase()">Next →</button>
+</div>
+
+<script>
+var PHASES = [
+  {
+    id:'p1', label:'O2 & Gas',
+    groups:[
+      {title:'Oxygen supply',items:[
+        {l:'Pipeline O2 pressure 50–55 psi confirmed',u:1,n:'Check wall gauge — green gauge reading'},
+        {l:'Backup O2 cylinder present and > 1000 psi',u:1,n:'Open cylinder valve, read gauge, close valve'},
+        {l:'O2 cylinder valve closed after check',n:'Leave pipeline as primary source'},
+        {l:'Low O2 pressure alarm tested and functional',u:1,n:'Disconnect pipeline briefly — alarm should sound'},
+        {l:'O2 flush valve tested — high flow delivered',n:'Press O2 flush, confirm high flow at circuit'},
+      ]},
+      {title:'Medical gases',items:[
+        {l:'N2O pipeline pressure 50–55 psi (if used)',n:'Yellow gauge'},
+        {l:'Air pipeline pressure 50–55 psi (if used)',n:'Yellow/black gauge'},
+        {l:'All pipeline hoses correctly seated and color-coded',n:'DISS fittings — O2 green, N2O blue, Air yellow'},
+        {l:'Gas cylinders on machine closed (pipeline primary)',n:'Prevent accidental cylinder depletion'},
+      ]},
+      {title:'Vaporizer',items:[
+        {l:'Correct volatile agent confirmed for case',u:1,n:'Verify with surgeon / anesthesia plan'},
+        {l:'Vaporizer filled to appropriate level',n:'Not overfilled — between min and max marks'},
+        {l:'Vaporizer locked in OFF position',n:'No other vaporizer simultaneously selected'},
+        {l:'Vaporizer dial turns smoothly, no leaks',n:'Check filler cap tight'},
+        {l:'Desflurane vaporizer heated and ready (if used)',n:'Must warm up 5–10 min before use'},
+      ]},
+    ]
+  },
+  {
+    id:'p2', label:'Machine',
+    groups:[
+      {title:'Machine power and displays',items:[
+        {l:'Machine powered ON — self-test complete',u:1,n:'Follow machine prompts if automated checkout'},
+        {l:'All displays functioning — no error messages',n:''},
+        {l:'Date and time correct on machine display',n:'Affects log / record accuracy'},
+        {l:'Backup battery functional (if applicable)',n:'Check indicator light'},
+      ]},
+      {title:'Flowmeters and controls',items:[
+        {l:'Flowmeters moving freely — no sticking',n:'O2, N2O, Air floats move with dial'},
+        {l:'Minimum O2 flow maintained when N2O on',n:'Hypoxic guard functional — O2 should not drop < 25%'},
+        {l:'Flowmeters read zero when all off',n:''},
+        {l:'All knobs turn smoothly without resistance',n:''},
+      ]},
+      {title:'Leak test (low pressure system)',items:[
+        {l:'Negative pressure leak test (bulb method) OR machine automated leak test passed',u:1,n:'Squeeze bulb — should not re-expand in 10s'},
+        {l:'No audible gas leaks from machine, circuit, or connections',n:'Listen carefully'},
+        {l:'Common gas outlet connection tight',n:'Where circuit connects to machine'},
+      ]},
+    ]
+  },
+  {
+    id:'p3', label:'Circuit',
+    groups:[
+      {title:'Breathing circuit',items:[
+        {l:'Correct circuit selected for case (adult / peds)',u:1,n:'Adult: 2L bag. Peds: appropriate small circuit'},
+        {l:'Circuit connections tight — all ports seated',n:'Y-piece, inspiratory/expiratory limbs, elbow'},
+        {l:'Circuit free of cracks, holes, or damage',n:'Visually inspect entire circuit'},
+        {l:'New circuit or circuit verified clean',n:'Per institutional protocol'},
+        {l:'HME / bacterial filter in place (if used)',n:'Between circuit and patient connection'},
+        {l:'ETCO2 sampling line connected and patent',n:''},
+        {l:'Pressure manometer present and functional',n:'Reads zero at rest'},
+      ]},
+      {title:'Bag and bellows',items:[
+        {l:'Reservoir bag correct size and attached',n:'Adult: 3L. Peds: 1L or 500 mL'},
+        {l:'Bag fills and empties appropriately',n:'Squeeze bag — pressure rises, vent to decompress'},
+        {l:'Bellows assembly intact (if bellow ventilator)',n:'Check for tears or cracks'},
+        {l:'APL valve moves freely — tested at multiple settings',u:1,n:'Open → close → partially open'},
+        {l:'APL valve set appropriately for mask ventilation',n:'Set to 30–40 cmH2O for induction'},
+      ]},
+      {title:'CO2 absorbent',items:[
+        {l:'CO2 absorbent color normal — not exhausted',u:1,n:'Soda lime: white/off-white. Spent = purple/violet'},
+        {l:'Absorbent canister full — no channeling',n:'Gently shake canister to assess'},
+        {l:'Canister seated and locked properly',n:'No gaps in circuit'},
+        {l:'Absorbent changed if > 8 hrs use or color changed',n:''},
+      ]},
+      {title:'Unidirectional valves',items:[
+        {l:'Inspiratory valve opens on inspiration',n:'Watch disc movement during test breath'},
+        {l:'Expiratory valve opens on expiration',n:'Watch disc movement during test breath'},
+        {l:'Both valves seated properly — no leaks around disc',n:''},
+      ]},
+    ]
+  },
+  {
+    id:'p4', label:'Ventilator',
+    groups:[
+      {title:'Ventilator setup',items:[
+        {l:'Ventilator mode selected appropriately',n:'VCV, PCV, or SIMV per preference'},
+        {l:'Tidal volume set — 6–8 mL/kg IBW (default)',n:'Adjust after connecting patient'},
+        {l:'Rate set — default 10–12 bpm',n:''},
+        {l:'PEEP set — default 5 cmH2O',n:'Adjust per case'},
+        {l:'FiO2 set — 100% for induction, adjust for maintenance',n:''},
+        {l:'I:E ratio set — default 1:2',n:''},
+        {l:'Pressure limit set — 30–40 cmH2O',n:'Prevents barotrauma'},
+      ]},
+      {title:'Ventilator function test',items:[
+        {l:'Ventilator tested with circuit occluded — pressure rises',u:1,n:'Occlude Y-piece — vent cycles — pressure should build'},
+        {l:'Delivered tidal volumes match set values',n:'Watch spirometer or digital readout'},
+        {l:'No leak alarm triggered during test breath',n:''},
+        {l:'Inspiratory and expiratory times appropriate',n:''},
+        {l:'Ventilator alarm limits set and active',u:1,n:'Low pressure, high pressure, apnea, disconnect'},
+      ]},
+      {title:'Manual to vent switch',items:[
+        {l:'Switch between manual bag and vent tested',n:'Both modes functional'},
+        {l:'APL valve bypassed when vent mode active',n:'Confirm vent controls circuit pressure in vent mode'},
+      ]},
+    ]
+  },
+  {
+    id:'p5', label:'Monitors',
+    groups:[
+      {title:'Monitoring equipment',items:[
+        {l:'SpO2 probe attached and waveform present',u:1,n:'Pleth waveform visible, reading stable'},
+        {l:'ETCO2 sampling line connected — waveform confirmed',u:1,n:'Normal capnography waveform shape'},
+        {l:'NIBP cuff correct size and cycling',n:'Verify reading within expected range for patient'},
+        {l:'EKG leads attached — normal sinus rhythm confirmed',n:'All 5 leads, II and V5 minimum'},
+        {l:'Temperature probe available and functional',n:'Esophageal, rectal, or skin as appropriate'},
+        {l:'Neuromuscular monitoring (TOF) available',n:'Electrodes, stimulator, and quantitative device'},
+        {l:'Invasive arterial line setup ready (if planned)',n:'Transducer, tubing, flush, zeroing stopcock'},
+        {l:'BIS / depth of anesthesia monitor ready (if used)',n:''},
+      ]},
+      {title:'Alarm settings',items:[
+        {l:'SpO2 low alarm: 92–94%',u:1,n:'Adjust per patient if chronic hypoxemia'},
+        {l:'ETCO2 high alarm: 50 mmHg',n:''},
+        {l:'ETCO2 low alarm: 25 mmHg',n:'Detect disconnect / apnea'},
+        {l:'NIBP high alarm set appropriately',n:''},
+        {l:'HR alarms set: 40 low, 120 high (adjust per pt)',n:''},
+        {l:'Apnea alarm active',u:1,n:''},
+        {l:'All alarms audible — volume adequate for OR noise',u:1,n:''},
+      ]},
+    ]
+  },
+  {
+    id:'p6', label:'Airway',
+    groups:[
+      {title:'Airway equipment',items:[
+        {l:'Laryngoscope handle charged — light bright, blade tight',u:1,n:'Test light before every case'},
+        {l:'Correct blade size selected for patient',n:'Mac 3–4 adult. Miller for peds or difficult airway.'},
+        {l:'Video laryngoscope charged and on (if planned)',n:'GlideScope, C-MAC, etc.'},
+        {l:'Video laryngoscope blade clean and attached',n:''},
+        {l:'ETT correct size selected — cuff intact',u:1,n:'Adult male: 7.5–8.0. Adult female: 7.0–7.5'},
+        {l:'ETT cuff tested — no leak on inflation',n:'Inflate, check symmetry, deflate'},
+        {l:'Stylet in ETT — tip bent appropriately',n:'Bend 35 degrees at distal 1/3'},
+        {l:'10 mL syringe for cuff attached to ETT',n:''},
+        {l:'ETT tape / holder ready',n:''},
+        {l:'LMA correct size available and checked',n:'Adult female: 3–4. Adult male: 4–5'},
+        {l:'Supraglottic airway backup available',u:1,n:''},
+      ]},
+      {title:'Difficult airway',items:[
+        {l:'Difficult airway cart location confirmed',u:1,n:'Know exactly where it is before case starts'},
+        {l:'Fiberoptic scope available (if anticipated DA)',n:'Checked, charged, white-balanced'},
+        {l:'Bougie available and accessible',n:''},
+        {l:'Surgical airway kit location known',u:1,n:'Cricothyrotomy kit — CICO plan'},
+        {l:'Airway assessment reviewed — plan A, B, C documented',u:1,n:''},
+      ]},
+      {title:'Suction',items:[
+        {l:'Suction ON and functional — adequate vacuum',u:1,n:'Test by occluding tip — strong suction'},
+        {l:'Yankauer at bedside and within reach',u:1,n:''},
+        {l:'Suction tubing connected and kink-free',n:''},
+        {l:'Suction canister not full',n:''},
+      ]},
+    ]
+  },
+  {
+    id:'p7', label:'Drugs & IV',
+    groups:[
+      {title:'Emergency drugs — must be drawn before every case',items:[
+        {l:'Ephedrine 5 mg/mL drawn and labeled',u:1,n:'Standard: 50 mg in 10 mL NS'},
+        {l:'Phenylephrine 100 mcg/mL drawn and labeled',u:1,n:'Standard: 10 mg in 100 mL NS or bolus syringe'},
+        {l:'Atropine 0.4 mg/mL drawn and labeled',u:1,n:''},
+        {l:'Succinylcholine 20 mg/mL drawn and labeled',u:1,n:'Standard: 200 mg in 10 mL'},
+        {l:'Epinephrine 10 mcg/mL (1:100,000) drawn',u:1,n:'For anaphylaxis / cardiac — dilute 0.1 mg in 10 mL'},
+      ]},
+      {title:'Induction drugs',items:[
+        {l:'Propofol / induction agent drawn and labeled',n:''},
+        {l:'Rocuronium or NMB drawn and labeled',n:''},
+        {l:'Fentanyl / opioid drawn and labeled',n:''},
+        {l:'Midazolam drawn if planned',n:''},
+        {l:'Ketamine drawn if planned',n:''},
+        {l:'All syringes clearly labeled — drug, dose, concentration',u:1,n:''},
+      ]},
+      {title:'Infusions and adjuncts',items:[
+        {l:'Vasopressor infusion prepared if anticipated',n:'Phenylephrine or norepinephrine drip'},
+        {l:'Antiemetics drawn — dexamethasone, ondansetron',n:''},
+        {l:'Antibiotics confirmed and timing noted',u:1,n:'Within 60 min of incision'},
+        {l:'Reversal agents available — neostigmine/glyco or sugammadex',u:1,n:''},
+        {l:'Naloxone available',n:''},
+      ]},
+      {title:'IV access',items:[
+        {l:'IV access confirmed patent — flush without resistance',u:1,n:''},
+        {l:'IV size and site appropriate for case',n:'18G minimum for most cases. 16G for blood loss risk.'},
+        {l:'IV line primed — no air bubbles',n:''},
+        {l:'Extension set and stopcocks secured',n:''},
+        {l:'Second IV access if high blood loss risk',n:''},
+        {l:'Blood tubing primed (if blood products anticipated)',n:''},
+      ]},
+    ]
+  },
+  {
+    id:'p8', label:'Final',
+    groups:[
+      {title:'Patient safety checks',items:[
+        {l:'Patient identity confirmed — 2 identifiers',u:1,n:'Name + DOB. Match armband to chart.'},
+        {l:'Surgical site and side confirmed',u:1,n:'Mark visible, patient confirms if awake'},
+        {l:'Consent signed and in chart',u:1,n:''},
+        {l:'Allergies reviewed and communicated to team',u:1,n:''},
+        {l:'NPO status confirmed',u:1,n:''},
+        {l:'Pre-op H&P and labs reviewed',n:''},
+        {l:'Anesthesia plan confirmed',n:'GA vs regional vs MAC, airway plan'},
+        {l:'Pre-op medications given (if ordered)',n:'Midazolam, beta-blocker, etc.'},
+      ]},
+      {title:'Room and team',items:[
+        {l:'Positioning equipment in place',n:'Bean bag, axillary roll, padding ready'},
+        {l:'Warming device active — Bear Hugger on',u:1,n:'Warm patient before draping if possible'},
+        {l:'Surgeon present or scrubbing',n:''},
+        {l:'Time Out completed',u:1,n:'Patient, procedure, site, allergies — all team present'},
+        {l:'Blood products available (if indicated)',n:'Type and screen or crossmatch in system'},
+        {l:'Cell saver set up (if high EBL anticipated)',n:''},
+        {l:'OR temperature set appropriately',n:'68–70°F standard. Neonates/peds higher.'},
+      ]},
+      {title:'Documentation',items:[
+        {l:'Anesthesia record open in EPIC',n:''},
+        {l:'Machine checkout documented',u:1,n:'FDA checklist or equivalent documented in record'},
+        {l:'Pre-induction vitals recorded',n:''},
+        {l:'Pre-op assessment note finalized',n:''},
+        {l:'Anesthesia start time noted',n:''},
+      ]},
+    ]
+  },
+];
+
+var checks = {};
+var activeIdx = 0;
+
+function ikey(pi, gi, ii) { return PHASES[pi].id + '-' + gi + '-' + ii; }
+
+function totalItems() {
+  var t = 0;
+  for (var i = 0; i < PHASES.length; i++)
+    for (var j = 0; j < PHASES[i].groups.length; j++)
+      t += PHASES[i].groups[j].items.length;
+  return t;
+}
+function checkedCount() {
+  var c = 0, vals = Object.keys(checks);
+  for (var i = 0; i < vals.length; i++) if (checks[vals[i]]) c++;
+  return c;
+}
+
+function updateRing() {
+  var tot = totalItems(), don = checkedCount();
+  var pct = tot ? Math.round(don / tot * 100) : 0;
+  var circ = 106.8;
+  document.getElementById('ringFill').style.strokeDashoffset = circ - circ * pct / 100;
+  document.getElementById('ringLabel').textContent = pct + '%';
+  var tabs = document.querySelectorAll('.phase-tab');
+  for (var pi = 0; pi < PHASES.length; pi++) {
+    var tab = tabs[pi]; if (!tab) continue;
+    var t = 0, d = 0;
+    for (var gi = 0; gi < PHASES[pi].groups.length; gi++)
+      for (var ii = 0; ii < PHASES[pi].groups[gi].items.length; ii++) {
+        t++;
+        if (checks[ikey(pi, gi, ii)]) d++;
+      }
+    tab.classList.remove('done', 'partial');
+    if (d === t && t > 0) tab.classList.add('done');
+    else if (d > 0) tab.classList.add('partial');
+  }
+}
+
+function renderTabs() {
+  var con = document.getElementById('phaseTabs');
+  con.innerHTML = '';
+  for (var pi = 0; pi < PHASES.length; pi++) {
+    (function(idx) {
+      var btn = document.createElement('button');
+      btn.className = 'phase-tab' + (idx === activeIdx ? ' active' : '');
+      btn.innerHTML = '<span class="pip"></span>' + PHASES[idx].label;
+      btn.onclick = function() { switchPhase(idx); };
+      con.appendChild(btn);
+    })(pi);
+  }
+}
+
+function renderContent() {
+  var con = document.getElementById('mainContent');
+  con.innerHTML = '';
+  for (var pi = 0; pi < PHASES.length; pi++) {
+    (function(pidx) {
+      var sec = document.createElement('div');
+      sec.className = 'section' + (pidx === activeIdx ? ' active' : '');
+      sec.id = 'sec' + pidx;
+
+      if (pidx === 0) {
+        var banner = document.createElement('div');
+        banner.className = 'fda-banner';
+        banner.textContent = 'FDA 2008 Anesthesia Machine Checkout — complete before every case. Items marked URGENT must not be skipped.';
+        sec.appendChild(banner);
+      }
+
+      for (var gi = 0; gi < PHASES[pidx].groups.length; gi++) {
+        (function(gidx) {
+          var g = PHASES[pidx].groups[gidx];
+          var lbl = document.createElement('div');
+          lbl.className = 'sec-label';
+          lbl.textContent = g.title;
+          sec.appendChild(lbl);
+
+          for (var ii = 0; ii < g.items.length; ii++) {
+            (function(iidx) {
+              var it = g.items[iidx];
+              var k = ikey(pidx, gidx, iidx);
+              var row = document.createElement('div');
+              row.className = 'item' + (it.u ? ' urgent' : '') + (checks[k] ? ' checked' : '');
+              row.innerHTML =
+                '<div class="check-box"><svg class="check-icon" viewBox="0 0 11 9"><path d="M1 4.5L4 7.5L10 1"/></svg></div>' +
+                '<div class="label-wrap">' +
+                  '<div class="label-text">' + (it.u ? '<span class="urgent-badge">MUST DO</span>' : '') + it.l + '</div>' +
+                  (it.n ? '<div class="note-text">' + it.n + '</div>' : '') +
+                '</div>';
+              row.addEventListener('click', (function(k2, r) {
+                return function() {
+                  checks[k2] = !checks[k2];
+                  r.classList.toggle('checked', checks[k2]);
+                  updateRing();
+                };
+              })(k, row));
+              sec.appendChild(row);
+            })(ii);
+          }
+        })(gi);
+      }
+      con.appendChild(sec);
+    })(pi);
+  }
+}
+
+function switchPhase(pi) {
+  activeIdx = pi;
+  var tabs = document.querySelectorAll('.phase-tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('active', i === pi);
+  var secs = document.querySelectorAll('.section');
+  for (var i = 0; i < secs.length; i++) secs[i].classList.toggle('active', i === pi);
+  document.getElementById('mainContent').scrollTop = 0;
+}
+
+function nextPhase() {
+  var n = (activeIdx + 1) % PHASES.length;
+  switchPhase(n);
+  var tabs = document.querySelectorAll('.phase-tab');
+  if (tabs[n]) tabs[n].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+function resetAll() {
+  if (!confirm('Reset all checks for new case?')) return;
+  checks = {};
+  document.querySelectorAll('.item').forEach(function(r) { r.classList.remove('checked'); });
+  updateRing();
+}
+
+renderTabs();
+renderContent();
+updateRing();
+</script>
+</body>
+</html>
