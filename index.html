@@ -8,6 +8,10 @@
 <meta name="apple-mobile-web-app-title" content="Anesthesia RX">
 <meta name="theme-color" content="#0a0f14">
 <title>Anesthesia RX</title>
+
+<!-- PWA Icon: inline SVG as data URI -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230a0f14'/%3E%3Cpolyline points='40,256 124,256 158,154 204,358 248,216 284,296 318,256 472,256' fill='none' stroke='%2300e5a0' stroke-width='28' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ctext x='256' y='440' text-anchor='middle' font-family='monospace' font-size='80' font-weight='500' fill='%2300e5a0' letter-spacing='12'%3ERX%3C/text%3E%3C/svg%3E">
+
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -27,7 +31,6 @@
 html,body{height:100%;overscroll-behavior:none;background:var(--bg)}
 body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-direction:column;max-width:430px;margin:0 auto}
 
-/* TOP BAR */
 .topbar{
   position:sticky;top:0;z-index:100;
   padding:calc(env(safe-area-inset-top,0px) + 14px) 20px 14px;
@@ -50,7 +53,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 .progress-ring .fill{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 0.4s}
 .ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--accent)}
 
-/* PHASE TABS */
 .phase-tabs{
   display:flex;overflow-x:auto;gap:6px;padding:12px 16px;
   background:var(--bg);border-bottom:1px solid var(--border);
@@ -77,7 +79,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 }
 .add-phase-tab.visible{display:flex;align-items:center;gap:4px}
 
-/* CONTENT */
 .content{
   flex:1;overflow-y:auto;overflow-x:hidden;
   padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 16px);
@@ -86,7 +87,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 .section{display:none}
 .section.active{display:block}
 
-/* GROUP */
 .group{margin-bottom:20px}
 .group-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .group-label{
@@ -104,9 +104,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 }
 .mini-btn:active{background:var(--surface2)}
 .mini-btn.danger{color:var(--red);border-color:rgba(255,77,109,0.3)}
-.mini-btn.success{color:var(--accent);border-color:rgba(0,229,160,0.3)}
 
-/* ITEM */
 .item{
   display:flex;align-items:flex-start;gap:10px;
   padding:11px 12px;border-radius:12px;
@@ -137,13 +135,11 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
   border:1px solid rgba(255,77,109,0.3);border-radius:4px;
   padding:1px 5px;display:inline-block;margin-right:4px;vertical-align:middle;
 }
-/* edit mode item extras */
 .item-del{
   display:none;align-items:center;justify-content:center;
   width:24px;height:24px;border-radius:50%;
   border:1px solid rgba(255,77,109,0.3);background:transparent;
-  color:var(--red);font-size:16px;cursor:pointer;flex-shrink:0;
-  line-height:1;margin-top:0;
+  color:var(--red);font-size:16px;cursor:pointer;flex-shrink:0;line-height:1;
 }
 .item-urgent-toggle{
   display:none;align-items:center;justify-content:center;
@@ -156,9 +152,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 .edit-mode .item{cursor:default}
 .edit-mode .item:not(.editing):active{background:var(--surface)}
 .edit-mode .group-actions{display:flex}
-.edit-mode .add-phase-tab{display:flex}
 
-/* ADD ITEM ROW */
 .add-item-row{
   display:none;align-items:center;gap:8px;
   padding:10px 12px;border-radius:12px;
@@ -179,7 +173,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
   color:var(--accent);cursor:pointer;white-space:nowrap;
 }
 
-/* MODALS */
 .modal-overlay{
   display:none;position:fixed;inset:0;z-index:200;
   background:rgba(0,0,0,0.7);align-items:flex-end;justify-content:center;
@@ -220,7 +213,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 .modal-btn.cancel{background:transparent;border:1px solid var(--border2);color:var(--muted)}
 .modal-btn.confirm{background:var(--accent);border:1px solid var(--accent);color:#000;font-weight:500}
 
-/* FOOTER */
 .footer{
   padding:12px 20px calc(env(safe-area-inset-bottom,0px) + 12px);
   border-top:1px solid var(--border);background:var(--bg);
@@ -238,7 +230,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="app-title">Anesthesia<span>RX</span></div>
   <div class="topbar-right">
@@ -254,21 +245,18 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
   </div>
 </div>
 
-<!-- PHASE TABS -->
 <div class="phase-tabs" id="phase-tabs">
   <button class="add-phase-tab" id="add-phase-tab" onclick="openAddPhase()">+ phase</button>
 </div>
 
-<!-- CONTENT -->
 <div class="content" id="content"></div>
 
-<!-- FOOTER -->
 <div class="footer">
   <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
   <button class="btn btn-accent" onclick="nextTab()">Next →</button>
 </div>
 
-<!-- ADD ITEM MODAL -->
+<!-- ITEM MODAL -->
 <div class="modal-overlay" id="item-modal">
   <div class="modal">
     <div class="modal-title" id="item-modal-title">Add item</div>
@@ -285,7 +273,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
   </div>
 </div>
 
-<!-- ADD GROUP MODAL -->
+<!-- GROUP MODAL -->
 <div class="modal-overlay" id="group-modal">
   <div class="modal">
     <div class="modal-title">Add group</div>
@@ -297,7 +285,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
   </div>
 </div>
 
-<!-- ADD PHASE MODAL -->
+<!-- PHASE MODAL -->
 <div class="modal-overlay" id="phase-modal">
   <div class="modal">
     <div class="modal-title">Add phase</div>
@@ -309,7 +297,7 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
   </div>
 </div>
 
-<!-- RENAME MODAL (phase or group) -->
+<!-- RENAME MODAL -->
 <div class="modal-overlay" id="rename-modal">
   <div class="modal">
     <div class="modal-title" id="rename-modal-title">Rename</div>
@@ -322,7 +310,6 @@ body{font-family:'DM Mono',monospace;color:var(--text);display:flex;flex-directi
 </div>
 
 <script>
-// ─── DEFAULT DATA ───────────────────────────────────────────────
 const DEFAULT_PHASES = [
   {
     id:"post-ind", label:"Post-induction",
@@ -508,418 +495,235 @@ const DEFAULT_PHASES = [
   },
 ];
 
-// ─── STATE ───────────────────────────────────────────────────────
-function loadData() {
-  try {
-    const saved = localStorage.getItem('anes_v2_data');
-    if (saved) return JSON.parse(saved);
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(DEFAULT_PHASES));
-}
-function saveData() {
-  localStorage.setItem('anes_v2_data', JSON.stringify(phases));
-}
-function loadChecks() {
-  try { return JSON.parse(localStorage.getItem('anes_v2_checks') || '{}'); } catch(e) { return {}; }
-}
-function saveChecks() {
-  localStorage.setItem('anes_v2_checks', JSON.stringify(checks));
-}
+function loadData(){try{const s=localStorage.getItem('anes_v2_data');if(s)return JSON.parse(s);}catch(e){}return JSON.parse(JSON.stringify(DEFAULT_PHASES));}
+function saveData(){localStorage.setItem('anes_v2_data',JSON.stringify(phases));}
+function loadChecks(){try{return JSON.parse(localStorage.getItem('anes_v2_checks')||'{}');}catch(e){return {};}}
+function saveChecks(){localStorage.setItem('anes_v2_checks',JSON.stringify(checks));}
 
-let phases = loadData();
-let checks = loadChecks();
-let activePhase = 0;
-let editMode = false;
+let phases=loadData();
+let checks=loadChecks();
+let activePhase=0;
+let editMode=false;
+let modalCtx={};
 
-// modal context
-let modalCtx = {};
+function itemKey(pi,gi,ii){return `${phases[pi].id}-${gi}-${ii}`;}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
+function totalItems(){return phases.reduce((a,p)=>a+p.groups.reduce((b,g)=>b+g.items.length,0),0);}
+function checkedCount(){return Object.values(checks).filter(Boolean).length;}
+function phaseStats(pi){let total=0,done=0;phases[pi].groups.forEach((g,gi)=>g.items.forEach((_,ii)=>{total++;if(checks[itemKey(pi,gi,ii)])done++;}));return{total,done};}
 
-// ─── UTILS ───────────────────────────────────────────────────────
-function itemKey(pi, gi, ii) { return `${phases[pi].id}-${gi}-${ii}`; }
-function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
-
-function totalItems() {
-  return phases.reduce((a,p) => a + p.groups.reduce((b,g) => b + g.items.length, 0), 0);
-}
-function checkedCount() { return Object.values(checks).filter(Boolean).length; }
-function phaseStats(pi) {
-  let total=0, done=0;
-  phases[pi].groups.forEach((g,gi) => g.items.forEach((_,ii) => {
-    total++;
-    if (checks[itemKey(pi,gi,ii)]) done++;
-  }));
-  return {total, done};
-}
-
-// ─── PROGRESS RING ───────────────────────────────────────────────
-function updateRing() {
-  const total = totalItems(), done = checkedCount();
-  const pct = total ? Math.round(done/total*100) : 0;
-  const circ = 106.8;
-  document.getElementById('ring-fill').style.strokeDashoffset = circ - circ*pct/100;
-  document.getElementById('ring-label').textContent = pct+'%';
+function updateRing(){
+  const total=totalItems(),done=checkedCount();
+  const pct=total?Math.round(done/total*100):0;
+  const circ=106.8;
+  document.getElementById('ring-fill').style.strokeDashoffset=circ-circ*pct/100;
+  document.getElementById('ring-label').textContent=pct+'%';
   updateTabPips();
 }
-function updateTabPips() {
-  phases.forEach((_,pi) => {
-    const tab = document.querySelector(`.phase-tab[data-pi="${pi}"]`);
-    if (!tab) return;
-    const {total, done} = phaseStats(pi);
+function updateTabPips(){
+  phases.forEach((_,pi)=>{
+    const tab=document.querySelector(`.phase-tab[data-pi="${pi}"]`);
+    if(!tab)return;
+    const{total,done}=phaseStats(pi);
     tab.classList.remove('done','partial');
-    if (done===total && total>0) tab.classList.add('done');
-    else if (done>0) tab.classList.add('partial');
+    if(done===total&&total>0)tab.classList.add('done');
+    else if(done>0)tab.classList.add('partial');
   });
 }
 
-// ─── EDIT MODE ───────────────────────────────────────────────────
-function toggleEditMode() {
-  editMode = !editMode;
-  document.body.classList.toggle('edit-mode', editMode);
-  const btn = document.getElementById('edit-btn');
-  btn.textContent = editMode ? '✓ Done' : '✎ Edit';
-  btn.classList.toggle('active', editMode);
-  const addPhaseTab = document.getElementById('add-phase-tab');
-  addPhaseTab.classList.toggle('visible', editMode);
-  // show/hide add-item rows
-  document.querySelectorAll('.add-item-row').forEach(r => r.classList.toggle('visible', editMode));
+function toggleEditMode(){
+  editMode=!editMode;
+  document.body.classList.toggle('edit-mode',editMode);
+  const btn=document.getElementById('edit-btn');
+  btn.textContent=editMode?'✓ Done':'✎ Edit';
+  btn.classList.toggle('active',editMode);
+  document.getElementById('add-phase-tab').classList.toggle('visible',editMode);
+  document.querySelectorAll('.add-item-row').forEach(r=>r.classList.toggle('visible',editMode));
 }
 
-// ─── RENDER ──────────────────────────────────────────────────────
-function renderAll() {
-  renderTabs();
-  renderContent();
-  updateRing();
-}
+function renderAll(){renderTabs();renderContent();updateRing();}
 
-function renderTabs() {
-  const container = document.getElementById('phase-tabs');
-  // clear existing tabs (keep add-phase-tab)
-  container.querySelectorAll('.phase-tab').forEach(t => t.remove());
-  const addBtn = document.getElementById('add-phase-tab');
-
-  phases.forEach((p, pi) => {
-    const btn = document.createElement('button');
-    btn.className = 'phase-tab' + (pi === activePhase ? ' active' : '');
-    btn.dataset.pi = pi;
-    btn.innerHTML = `<span class="pip"></span>${p.label}`;
-    btn.onclick = () => {
-      if (editMode) { openRenamePhase(pi); return; }
-      switchPhase(pi);
-    };
-    container.insertBefore(btn, addBtn);
+function renderTabs(){
+  const container=document.getElementById('phase-tabs');
+  container.querySelectorAll('.phase-tab').forEach(t=>t.remove());
+  const addBtn=document.getElementById('add-phase-tab');
+  phases.forEach((p,pi)=>{
+    const btn=document.createElement('button');
+    btn.className='phase-tab'+(pi===activePhase?' active':'');
+    btn.dataset.pi=pi;
+    btn.innerHTML=`<span class="pip"></span>${p.label}`;
+    btn.onclick=()=>{if(editMode){openRenamePhase(pi);return;}switchPhase(pi);};
+    container.insertBefore(btn,addBtn);
   });
   updateTabPips();
 }
 
-function renderContent() {
-  const container = document.getElementById('content');
-  container.innerHTML = '';
-
-  phases.forEach((p, pi) => {
-    const sec = document.createElement('div');
-    sec.className = 'section' + (pi === activePhase ? ' active' : '');
-    sec.id = 'sec-' + pi;
-
-    p.groups.forEach((g, gi) => {
-      const grpDiv = document.createElement('div');
-      grpDiv.className = 'group';
-
-      // group header
-      const header = document.createElement('div');
-      header.className = 'group-header';
-      header.innerHTML = `
-        <div class="group-label">${g.title}</div>
-        <div class="group-actions">
-          <button class="mini-btn" onclick="openRenameGroup(${pi},${gi})">rename</button>
-          <button class="mini-btn danger" onclick="deleteGroup(${pi},${gi})">delete</button>
-        </div>
-        <div class="group-line"></div>`;
+function renderContent(){
+  const container=document.getElementById('content');
+  container.innerHTML='';
+  phases.forEach((p,pi)=>{
+    const sec=document.createElement('div');
+    sec.className='section'+(pi===activePhase?' active':'');
+    sec.id='sec-'+pi;
+    p.groups.forEach((g,gi)=>{
+      const grpDiv=document.createElement('div');
+      grpDiv.className='group';
+      const header=document.createElement('div');
+      header.className='group-header';
+      header.innerHTML=`<div class="group-label">${g.title}</div><div class="group-actions"><button class="mini-btn" onclick="openRenameGroup(${pi},${gi})">rename</button><button class="mini-btn danger" onclick="deleteGroup(${pi},${gi})">delete</button></div><div class="group-line"></div>`;
       grpDiv.appendChild(header);
-
-      // items
-      g.items.forEach((it, ii) => {
-        grpDiv.appendChild(makeItemEl(pi, gi, ii, it));
-      });
-
-      // add item row
-      const addRow = document.createElement('div');
-      addRow.className = 'add-item-row' + (editMode ? ' visible' : '');
-      addRow.innerHTML = `
-        <input class="add-item-input" placeholder="Add item…" maxlength="120"
-          onkeydown="if(event.key==='Enter')quickAddItem(${pi},${gi},this)">
-        <button class="add-item-btn" onclick="quickAddItem(${pi},${gi},this.previousElementSibling)">Add</button>`;
+      g.items.forEach((it,ii)=>grpDiv.appendChild(makeItemEl(pi,gi,ii,it)));
+      const addRow=document.createElement('div');
+      addRow.className='add-item-row'+(editMode?' visible':'');
+      addRow.innerHTML=`<input class="add-item-input" placeholder="Add item…" maxlength="120" onkeydown="if(event.key==='Enter')quickAddItem(${pi},${gi},this)"><button class="add-item-btn" onclick="quickAddItem(${pi},${gi},this.previousElementSibling)">Add</button>`;
       grpDiv.appendChild(addRow);
-
       sec.appendChild(grpDiv);
     });
-
-    // add group button
-    const addGrpRow = document.createElement('div');
-    addGrpRow.className = 'add-item-row' + (editMode ? ' visible' : '');
-    addGrpRow.style.borderColor = 'rgba(0,229,160,0.2)';
-    addGrpRow.innerHTML = `<button class="add-item-btn" style="flex:1" onclick="openAddGroup(${pi})">+ Add group to this phase</button>`;
+    const addGrpRow=document.createElement('div');
+    addGrpRow.className='add-item-row'+(editMode?' visible':'');
+    addGrpRow.style.borderColor='rgba(0,229,160,0.2)';
+    addGrpRow.innerHTML=`<button class="add-item-btn" style="flex:1" onclick="openAddGroup(${pi})">+ Add group to this phase</button>`;
     sec.appendChild(addGrpRow);
-
     container.appendChild(sec);
   });
 }
 
-function makeItemEl(pi, gi, ii, it) {
-  const k = itemKey(pi, gi, ii);
-  const row = document.createElement('div');
-  row.className = 'item' + (it.urgent ? ' urgent' : '') + (checks[k] ? ' checked' : '');
-  row.dataset.key = k;
-
-  row.innerHTML = `
-    <button class="item-urgent-toggle" title="Toggle urgent" onclick="toggleUrgent(event,${pi},${gi},${ii})" aria-label="Toggle urgent">⚠</button>
-    <div class="check-box">
-      <svg class="check-icon" viewBox="0 0 11 9"><path d="M1 4.5L4 7.5L10 1"/></svg>
-    </div>
-    <div class="label-wrap">
-      <div class="label-text">${it.urgent ? '<span class="urgent-badge">URGENT</span>' : ''}${escHtml(it.l)}</div>
-      ${it.n ? `<div class="note-text">${escHtml(it.n)}</div>` : ''}
-    </div>
-    <button class="item-del" title="Delete" onclick="deleteItem(event,${pi},${gi},${ii})" aria-label="Delete item">×</button>`;
-
-  // tap to check (only when not in edit mode)
-  row.addEventListener('click', (e) => {
-    if (editMode) {
-      if (e.target.closest('.item-del') || e.target.closest('.item-urgent-toggle')) return;
-      openEditItem(pi, gi, ii);
-      return;
-    }
-    checks[k] = !checks[k];
-    row.classList.toggle('checked', checks[k]);
-    saveChecks();
-    updateRing();
+function makeItemEl(pi,gi,ii,it){
+  const k=itemKey(pi,gi,ii);
+  const row=document.createElement('div');
+  row.className='item'+(it.urgent?' urgent':'')+(checks[k]?' checked':'');
+  row.dataset.key=k;
+  row.innerHTML=`<button class="item-urgent-toggle" onclick="toggleUrgent(event,${pi},${gi},${ii})" aria-label="Toggle urgent">⚠</button><div class="check-box"><svg class="check-icon" viewBox="0 0 11 9"><path d="M1 4.5L4 7.5L10 1"/></svg></div><div class="label-wrap"><div class="label-text">${it.urgent?'<span class="urgent-badge">URGENT</span>':''}${escHtml(it.l)}</div>${it.n?`<div class="note-text">${escHtml(it.n)}</div>`:''}</div><button class="item-del" onclick="deleteItem(event,${pi},${gi},${ii})" aria-label="Delete">×</button>`;
+  row.addEventListener('click',(e)=>{
+    if(editMode){if(e.target.closest('.item-del')||e.target.closest('.item-urgent-toggle'))return;openEditItem(pi,gi,ii);return;}
+    checks[k]=!checks[k];
+    row.classList.toggle('checked',checks[k]);
+    saveChecks();updateRing();
   });
-
   return row;
 }
 
-function escHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function escHtml(str){if(!str)return'';return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ─── SWITCH PHASE ────────────────────────────────────────────────
-function switchPhase(pi) {
-  activePhase = pi;
-  document.querySelectorAll('.phase-tab').forEach((t,i) => t.classList.toggle('active', i===pi));
-  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===pi));
-  document.getElementById('content').scrollTop = 0;
+function switchPhase(pi){
+  activePhase=pi;
+  document.querySelectorAll('.phase-tab').forEach((t,i)=>t.classList.toggle('active',i===pi));
+  document.querySelectorAll('.section').forEach((s,i)=>s.classList.toggle('active',i===pi));
+  document.getElementById('content').scrollTop=0;
 }
-function nextTab() {
-  const next = (activePhase + 1) % phases.length;
+function nextTab(){
+  const next=(activePhase+1)%phases.length;
   switchPhase(next);
   document.querySelector(`.phase-tab[data-pi="${next}"]`).scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 }
-
-// ─── RESET ───────────────────────────────────────────────────────
-function resetAll() {
-  if (!confirm('Reset all checkboxes for a new case?')) return;
-  checks = {};
-  saveChecks();
-  document.querySelectorAll('.item').forEach(r => r.classList.remove('checked'));
+function resetAll(){
+  if(!confirm('Reset all checkboxes for a new case?'))return;
+  checks={};saveChecks();
+  document.querySelectorAll('.item').forEach(r=>r.classList.remove('checked'));
   updateRing();
 }
 
-// ─── QUICK ADD ITEM (inline) ─────────────────────────────────────
-function quickAddItem(pi, gi, input) {
-  const val = input.value.trim();
-  if (!val) return;
-  phases[pi].groups[gi].items.push({l: val});
-  saveData();
-  input.value = '';
-  // partial re-render of this group
-  const sec = document.getElementById('sec-'+pi);
-  const groups = sec.querySelectorAll('.group');
-  const grpDiv = groups[gi];
-  const ii = phases[pi].groups[gi].items.length - 1;
-  const addRow = grpDiv.querySelector('.add-item-row');
-  grpDiv.insertBefore(makeItemEl(pi, gi, ii, phases[pi].groups[gi].items[ii]), addRow);
+function quickAddItem(pi,gi,input){
+  const val=input.value.trim();if(!val)return;
+  phases[pi].groups[gi].items.push({l:val});
+  saveData();input.value='';
+  const sec=document.getElementById('sec-'+pi);
+  const grpDiv=sec.querySelectorAll('.group')[gi];
+  const ii=phases[pi].groups[gi].items.length-1;
+  const addRow=grpDiv.querySelector('.add-item-row');
+  grpDiv.insertBefore(makeItemEl(pi,gi,ii,phases[pi].groups[gi].items[ii]),addRow);
   updateRing();
 }
 
-// ─── ITEM MODAL (edit existing) ──────────────────────────────────
-function openEditItem(pi, gi, ii) {
-  const it = phases[pi].groups[gi].items[ii];
-  modalCtx = {type:'edit', pi, gi, ii};
-  document.getElementById('item-modal-title').textContent = 'Edit item';
-  document.getElementById('item-label-input').value = it.l || '';
-  document.getElementById('item-note-input').value = it.n || '';
-  const tog = document.getElementById('urgent-toggle');
-  tog.classList.toggle('on', !!it.urgent);
+function openEditItem(pi,gi,ii){
+  const it=phases[pi].groups[gi].items[ii];
+  modalCtx={type:'edit',pi,gi,ii};
+  document.getElementById('item-modal-title').textContent='Edit item';
+  document.getElementById('item-label-input').value=it.l||'';
+  document.getElementById('item-note-input').value=it.n||'';
+  document.getElementById('urgent-toggle').classList.toggle('on',!!it.urgent);
   document.getElementById('item-modal').classList.add('open');
-  setTimeout(() => document.getElementById('item-label-input').focus(), 100);
+  setTimeout(()=>document.getElementById('item-label-input').focus(),100);
 }
-function closeItemModal() {
-  document.getElementById('item-modal').classList.remove('open');
-  modalCtx = {};
-}
-function saveItemModal() {
-  const label = document.getElementById('item-label-input').value.trim();
-  if (!label) return;
-  const note = document.getElementById('item-note-input').value.trim();
-  const urgent = document.getElementById('urgent-toggle').classList.contains('on');
-  const {type, pi, gi, ii} = modalCtx;
-  if (type === 'edit') {
-    phases[pi].groups[gi].items[ii] = {l: label, n: note || undefined, urgent: urgent || undefined};
+function closeItemModal(){document.getElementById('item-modal').classList.remove('open');modalCtx={};}
+function saveItemModal(){
+  const label=document.getElementById('item-label-input').value.trim();if(!label)return;
+  const note=document.getElementById('item-note-input').value.trim();
+  const urgent=document.getElementById('urgent-toggle').classList.contains('on');
+  const{type,pi,gi,ii}=modalCtx;
+  if(type==='edit'){
+    phases[pi].groups[gi].items[ii]={l:label,n:note||undefined,urgent:urgent||undefined};
     saveData();
-    // re-render just that item
-    const sec = document.getElementById('sec-'+pi);
-    const grpDiv = sec.querySelectorAll('.group')[gi];
-    const oldItems = grpDiv.querySelectorAll('.item');
-    const oldRow = oldItems[ii];
-    const newRow = makeItemEl(pi, gi, ii, phases[pi].groups[gi].items[ii]);
-    grpDiv.replaceChild(newRow, oldRow);
+    const sec=document.getElementById('sec-'+pi);
+    const grpDiv=sec.querySelectorAll('.group')[gi];
+    const oldRow=grpDiv.querySelectorAll('.item')[ii];
+    grpDiv.replaceChild(makeItemEl(pi,gi,ii,phases[pi].groups[gi].items[ii]),oldRow);
   }
-  closeItemModal();
-  updateRing();
+  closeItemModal();updateRing();
 }
 
-// ─── DELETE ITEM ─────────────────────────────────────────────────
-function deleteItem(e, pi, gi, ii) {
+function deleteItem(e,pi,gi,ii){
   e.stopPropagation();
-  if (!confirm('Delete this item?')) return;
-  phases[pi].groups[gi].items.splice(ii, 1);
-  saveData();
-  // rebuild checks keys
-  rebuildChecks();
-  renderContent();
-  updateRing();
+  if(!confirm('Delete this item?'))return;
+  phases[pi].groups[gi].items.splice(ii,1);
+  saveData();rebuildChecks();renderContent();updateRing();
 }
-
-// ─── TOGGLE URGENT ───────────────────────────────────────────────
-function toggleUrgent(e, pi, gi, ii) {
+function toggleUrgent(e,pi,gi,ii){
   e.stopPropagation();
-  const it = phases[pi].groups[gi].items[ii];
-  it.urgent = !it.urgent;
-  saveData();
-  const sec = document.getElementById('sec-'+pi);
-  const grpDiv = sec.querySelectorAll('.group')[gi];
-  const oldRow = grpDiv.querySelectorAll('.item')[ii];
-  const newRow = makeItemEl(pi, gi, ii, it);
-  grpDiv.replaceChild(newRow, oldRow);
+  const it=phases[pi].groups[gi].items[ii];
+  it.urgent=!it.urgent;saveData();
+  const sec=document.getElementById('sec-'+pi);
+  const grpDiv=sec.querySelectorAll('.group')[gi];
+  const oldRow=grpDiv.querySelectorAll('.item')[ii];
+  grpDiv.replaceChild(makeItemEl(pi,gi,ii,it),oldRow);
 }
 
-// ─── GROUP MODALS ─────────────────────────────────────────────────
-function openAddGroup(pi) {
-  modalCtx = {type:'addGroup', pi};
-  document.getElementById('group-name-input').value = '';
-  document.getElementById('group-modal').classList.add('open');
-  setTimeout(() => document.getElementById('group-name-input').focus(), 100);
+function openAddGroup(pi){modalCtx={type:'addGroup',pi};document.getElementById('group-name-input').value='';document.getElementById('group-modal').classList.add('open');setTimeout(()=>document.getElementById('group-name-input').focus(),100);}
+function closeGroupModal(){document.getElementById('group-modal').classList.remove('open');modalCtx={};}
+function saveGroupModal(){
+  const name=document.getElementById('group-name-input').value.trim();if(!name)return;
+  const{pi}=modalCtx;phases[pi].groups.push({title:name,items:[]});
+  saveData();closeGroupModal();renderContent();updateRing();
 }
-function closeGroupModal() {
-  document.getElementById('group-modal').classList.remove('open');
-  modalCtx = {};
-}
-function saveGroupModal() {
-  const name = document.getElementById('group-name-input').value.trim();
-  if (!name) return;
-  const {pi} = modalCtx;
-  phases[pi].groups.push({title: name, items: []});
-  saveData();
-  closeGroupModal();
-  renderContent();
-  updateRing();
-}
-function deleteGroup(pi, gi) {
-  if (!confirm(`Delete group "${phases[pi].groups[gi].title}" and all its items?`)) return;
-  phases[pi].groups.splice(gi, 1);
-  saveData();
-  rebuildChecks();
-  renderContent();
-  updateRing();
+function deleteGroup(pi,gi){
+  if(!confirm(`Delete group "${phases[pi].groups[gi].title}" and all its items?`))return;
+  phases[pi].groups.splice(gi,1);saveData();rebuildChecks();renderContent();updateRing();
 }
 
-// ─── PHASE MODALS ─────────────────────────────────────────────────
-function openAddPhase() {
-  document.getElementById('phase-name-input').value = '';
-  document.getElementById('phase-modal').classList.add('open');
-  setTimeout(() => document.getElementById('phase-name-input').focus(), 100);
-}
-function closePhaseModal() {
-  document.getElementById('phase-modal').classList.remove('open');
-}
-function savePhaseModal() {
-  const name = document.getElementById('phase-name-input').value.trim();
-  if (!name) return;
-  phases.push({id: genId(), label: name, groups: []});
-  saveData();
-  closePhaseModal();
-  renderAll();
-  switchPhase(phases.length - 1);
+function openAddPhase(){document.getElementById('phase-name-input').value='';document.getElementById('phase-modal').classList.add('open');setTimeout(()=>document.getElementById('phase-name-input').focus(),100);}
+function closePhaseModal(){document.getElementById('phase-modal').classList.remove('open');}
+function savePhaseModal(){
+  const name=document.getElementById('phase-name-input').value.trim();if(!name)return;
+  phases.push({id:genId(),label:name,groups:[]});
+  saveData();closePhaseModal();renderAll();switchPhase(phases.length-1);
 }
 
-// ─── RENAME MODALS ───────────────────────────────────────────────
-function openRenamePhase(pi) {
-  modalCtx = {type:'renamePhase', pi};
-  document.getElementById('rename-modal-title').textContent = 'Rename phase';
-  document.getElementById('rename-input').value = phases[pi].label;
-  document.getElementById('rename-modal').classList.add('open');
-  setTimeout(() => document.getElementById('rename-input').focus(), 100);
-}
-function openRenameGroup(pi, gi) {
-  modalCtx = {type:'renameGroup', pi, gi};
-  document.getElementById('rename-modal-title').textContent = 'Rename group';
-  document.getElementById('rename-input').value = phases[pi].groups[gi].title;
-  document.getElementById('rename-modal').classList.add('open');
-  setTimeout(() => document.getElementById('rename-input').focus(), 100);
-}
-function closeRenameModal() {
-  document.getElementById('rename-modal').classList.remove('open');
-  modalCtx = {};
-}
-function saveRename() {
-  const val = document.getElementById('rename-input').value.trim();
-  if (!val) return;
-  const {type, pi, gi} = modalCtx;
-  if (type === 'renamePhase') {
-    phases[pi].label = val;
-    saveData();
-    renderTabs();
-  } else if (type === 'renameGroup') {
-    phases[pi].groups[gi].title = val;
-    saveData();
-    renderContent();
-  }
+function openRenamePhase(pi){modalCtx={type:'renamePhase',pi};document.getElementById('rename-modal-title').textContent='Rename phase';document.getElementById('rename-input').value=phases[pi].label;document.getElementById('rename-modal').classList.add('open');setTimeout(()=>document.getElementById('rename-input').focus(),100);}
+function openRenameGroup(pi,gi){modalCtx={type:'renameGroup',pi,gi};document.getElementById('rename-modal-title').textContent='Rename group';document.getElementById('rename-input').value=phases[pi].groups[gi].title;document.getElementById('rename-modal').classList.add('open');setTimeout(()=>document.getElementById('rename-input').focus(),100);}
+function closeRenameModal(){document.getElementById('rename-modal').classList.remove('open');modalCtx={};}
+function saveRename(){
+  const val=document.getElementById('rename-input').value.trim();if(!val)return;
+  const{type,pi,gi}=modalCtx;
+  if(type==='renamePhase'){phases[pi].label=val;saveData();renderTabs();}
+  else if(type==='renameGroup'){phases[pi].groups[gi].title=val;saveData();renderContent();}
   closeRenameModal();
 }
 
-// ─── REBUILD CHECKS after structural change ───────────────────────
-function rebuildChecks() {
-  // checks keys are positional so after deletions we just clear and re-key
-  // simpler: just clear checks for safety (rare destructive op)
-  checks = {};
-  saveChecks();
-}
+function rebuildChecks(){checks={};saveChecks();}
 
-// ─── CLOSE MODALS ON OVERLAY CLICK ───────────────────────────────
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) {
-      overlay.classList.remove('open');
-      modalCtx = {};
-    }
-  });
+document.querySelectorAll('.modal-overlay').forEach(overlay=>{
+  overlay.addEventListener('click',e=>{if(e.target===overlay){overlay.classList.remove('open');modalCtx={};}});
 });
-
-// ─── KEYBOARD ────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
-    modalCtx = {};
-  }
-  if (e.key === 'Enter') {
-    if (document.getElementById('rename-modal').classList.contains('open')) saveRename();
-    if (document.getElementById('group-modal').classList.contains('open')) saveGroupModal();
-    if (document.getElementById('phase-modal').classList.contains('open')) savePhaseModal();
-    if (document.getElementById('item-modal').classList.contains('open')) saveItemModal();
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.modal-overlay').forEach(m=>m.classList.remove('open'));modalCtx={};}
+  if(e.key==='Enter'){
+    if(document.getElementById('rename-modal').classList.contains('open'))saveRename();
+    if(document.getElementById('group-modal').classList.contains('open'))saveGroupModal();
+    if(document.getElementById('phase-modal').classList.contains('open'))savePhaseModal();
+    if(document.getElementById('item-modal').classList.contains('open'))saveItemModal();
   }
 });
 
-// ─── INIT ────────────────────────────────────────────────────────
 renderAll();
 </script>
 </body>
