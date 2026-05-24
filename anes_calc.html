@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AnesCalc">
+<meta name="theme-color" content="#0a0f14">
+<title>AnesCalc</title>
+<link rel="apple-touch-icon" sizes="512x512" href="data:image/png;base64,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">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0f14;--sf:#111820;--sf2:#182030;--sf3:#1e2a3a;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--ac:#00e5a0;--ac2:#00b87a;--rd:#ff4d6d;--am:#ffb547;--bl:#4da6ff;--tx:#e8f0f8;--mu:rgba(232,240,248,0.45);--fa:rgba(232,240,248,0.18)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none;background:var(--bg)}
+body{font-family:'DM Mono',monospace;color:var(--tx);display:flex;flex-direction:column;max-width:430px;margin:0 auto}
+
+.topbar{position:sticky;top:0;z-index:100;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 12px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.app-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.app-title span{color:var(--ac)}
+.reset-btn{font-size:11px;padding:5px 12px;border-radius:999px;border:1px solid var(--bd2);background:transparent;color:var(--mu);cursor:pointer;font-family:'DM Mono',monospace}
+.reset-btn:active{background:var(--sf2)}
+
+/* PT CARD */
+.pt-card{background:var(--sf);border-bottom:1px solid var(--bd);padding:14px 16px}
+.pt-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.pt-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.pt-row.last{margin-bottom:0}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:10px;color:var(--mu);letter-spacing:0.08em;text-transform:uppercase}
+.field input,.field select{background:var(--sf2);border:1px solid var(--bd2);border-radius:8px;padding:8px 10px;font-family:'DM Mono',monospace;font-size:14px;color:var(--tx);outline:none;width:100%;caret-color:var(--ac)}
+.field input:focus,.field select:focus{border-color:var(--ac)}
+.field select option{background:var(--sf2)}
+.ibw-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--sf2);border-radius:8px;border:1px solid var(--bd)}
+.ibw-label{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:0.08em}
+.ibw-vals{display:flex;gap:12px}
+.ibw-val{font-size:12px;color:var(--ac)}
+
+/* TABS */
+.tabs{display:flex;overflow-x:auto;gap:0;background:var(--sf);border-bottom:1px solid var(--bd);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:10px 16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--mu);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;background:transparent;border-top:none;border-left:none;border-right:none}
+.tab.active{color:var(--ac);border-bottom-color:var(--ac)}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:0 0 calc(env(safe-area-inset-bottom,0px) + 16px)}
+.section{display:none;padding:14px 16px}
+.section.active{display:block}
+
+/* DRUG CARDS */
+.drug-card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.drug-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--bd)}
+.drug-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.drug-class{font-size:10px;color:var(--mu);letter-spacing:0.06em;text-transform:uppercase}
+.drug-badge{font-size:9px;padding:2px 8px;border-radius:999px;background:rgba(0,229,160,0.12);color:var(--ac);border:1px solid rgba(0,229,160,0.25)}
+.drug-badge.red{background:rgba(255,77,109,0.12);color:var(--rd);border-color:rgba(255,77,109,0.25)}
+.drug-badge.amber{background:rgba(255,181,71,0.12);color:var(--am);border-color:rgba(255,181,71,0.25)}
+.drug-badge.blue{background:rgba(77,166,255,0.12);color:var(--bl);border-color:rgba(77,166,255,0.25)}
+.dose-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.dose-cell{padding:10px 14px;border-right:1px solid var(--bd)}
+.dose-cell:last-child{border-right:none}
+.dose-cell:nth-child(n+3){border-top:1px solid var(--bd)}
+.dose-cell.full{grid-column:1/-1;border-right:none}
+.dose-label{font-size:10px;color:var(--mu);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em}
+.dose-val{font-size:16px;font-weight:500;color:var(--tx)}
+.dose-val.highlight{color:var(--ac);font-size:18px}
+.dose-val.red{color:var(--rd)}
+.dose-val.amber{color:var(--am)}
+.dose-val.blue{color:var(--bl)}
+.dose-sub{font-size:10px;color:var(--mu);margin-top:2px}
+
+/* DRIP CARDS */
+.drip-card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.drip-header{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.drip-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.drip-conc{font-size:10px;color:var(--mu)}
+.drip-body{padding:10px 14px}
+.drip-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--bd)}
+.drip-row:last-child{border-bottom:none}
+.drip-dose{font-size:12px;color:var(--mu)}
+.drip-rate{font-size:14px;font-weight:500;color:var(--ac)}
+.drip-rate.red{color:var(--rd)}
+.drip-note{font-size:10px;color:var(--fa);margin-top:6px;line-height:1.5}
+
+/* FLUID CARDS */
+.fluid-card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.fluid-header{padding:10px 14px;border-bottom:1px solid var(--bd)}
+.fluid-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.fluid-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.fluid-cell{padding:10px 14px;border-right:1px solid var(--bd)}
+.fluid-cell:last-child,.fluid-cell:nth-child(2n){border-right:none}
+.fluid-cell:nth-child(n+3){border-top:1px solid var(--bd)}
+.fluid-cell.full{grid-column:1/-1;border-right:none;border-top:1px solid var(--bd)}
+.fluid-label{font-size:10px;color:var(--mu);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em}
+.fluid-val{font-size:15px;font-weight:500;color:var(--ac)}
+.fluid-sub{font-size:10px;color:var(--mu);margin-top:2px}
+
+/* SECTION LABEL */
+.sec-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mu);margin-bottom:10px;margin-top:4px;display:flex;align-items:center;gap:8px}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--bd)}
+
+/* NO DATA */
+.no-data{text-align:center;padding:40px 20px;color:var(--fa);font-size:13px}
+.no-data .icon{font-size:32px;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="app-title">Anes<span>Calc</span></div>
+  <button class="reset-btn" onclick="resetPt()">New Pt</button>
+</div>
+
+<!-- PATIENT INPUT -->
+<div class="pt-card">
+  <div class="pt-row">
+    <div class="field">
+      <label>Weight (kg)</label>
+      <input type="number" id="weight" placeholder="70" min="1" max="300" oninput="calc()">
+    </div>
+    <div class="field">
+      <label>Height (cm)</label>
+      <input type="number" id="height" placeholder="170" min="50" max="250" oninput="calc()">
+    </div>
+  </div>
+  <div class="pt-row">
+    <div class="field">
+      <label>Age (yr)</label>
+      <input type="number" id="age" placeholder="45" min="1" max="120" oninput="calc()">
+    </div>
+    <div class="field">
+      <label>Sex</label>
+      <select id="sex" onchange="calc()">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select>
+    </div>
+  </div>
+  <div class="ibw-bar" id="ibwBar" style="display:none">
+    <span class="ibw-label">Calculated</span>
+    <div class="ibw-vals">
+      <span class="ibw-val" id="ibwVal">IBW: --</span>
+      <span class="ibw-val" id="lbwVal">LBW: --</span>
+      <span class="ibw-val" id="bmiVal">BMI: --</span>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="switchTab(0,this)">Induction</button>
+  <button class="tab" onclick="switchTab(1,this)">Maintenance</button>
+  <button class="tab" onclick="switchTab(2,this)">Drips</button>
+  <button class="tab" onclick="switchTab(3,this)">Fluids</button>
+  <button class="tab" onclick="switchTab(4,this)">ABX</button>
+  <button class="tab" onclick="switchTab(5,this)">Emergency</button>
+</div>
+
+<div class="content">
+  <!-- INDUCTION -->
+  <div class="section active" id="sec0">
+    <div class="no-data" id="nd0"><div class="icon">⚖️</div>Enter patient weight to calculate doses</div>
+    <div id="induction-content" style="display:none"></div>
+  </div>
+
+  <!-- MAINTENANCE -->
+  <div class="section" id="sec1">
+    <div class="no-data" id="nd1"><div class="icon">⚖️</div>Enter patient weight to calculate doses</div>
+    <div id="maintenance-content" style="display:none"></div>
+  </div>
+
+  <!-- DRIPS -->
+  <div class="section" id="sec2">
+    <div class="no-data" id="nd2"><div class="icon">⚖️</div>Enter patient weight to calculate drip rates</div>
+    <div id="drips-content" style="display:none"></div>
+  </div>
+
+  <!-- FLUIDS -->
+  <div class="section" id="sec3">
+    <div class="no-data" id="nd3"><div class="icon">⚖️</div>Enter patient weight and age to calculate fluid needs</div>
+    <div id="fluids-content" style="display:none"></div>
+  </div>
+
+  <!-- ABX -->
+  <div class="section" id="sec4">
+    <div class="no-data" id="nd4"><div class="icon">⚖️</div>Enter patient weight to calculate antibiotic doses</div>
+    <div id="abx-content" style="display:none"></div>
+  </div>
+
+  <!-- EMERGENCY -->
+  <div class="section" id="sec5">
+    <div class="no-data" id="nd5"><div class="icon">⚖️</div>Enter patient weight to calculate emergency doses</div>
+    <div id="emergency-content" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+var activeTab = 0;
+
+function switchTab(idx, btn) {
+  activeTab = idx;
+  var tabs = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  btn.classList.add('active');
+  var secs = document.querySelectorAll('.section');
+  for (var i = 0; i < secs.length; i++) secs[i].classList.remove('active');
+  document.getElementById('sec' + idx).classList.add('active');
+}
+
+function resetPt() {
+  document.getElementById('weight').value = '';
+  document.getElementById('height').value = '';
+  document.getElementById('age').value = '';
+  document.getElementById('sex').value = 'M';
+  calc();
+}
+
+function r(n, dec) {
+  var d = dec === undefined ? 0 : dec;
+  return Math.round(n * Math.pow(10, d)) / Math.pow(10, d);
+}
+
+function fmt(n, dec) {
+  return r(n, dec === undefined ? 1 : dec).toFixed(dec === undefined ? 1 : dec);
+}
+
+function getVals() {
+  var wt = parseFloat(document.getElementById('weight').value);
+  var ht = parseFloat(document.getElementById('height').value);
+  var age = parseFloat(document.getElementById('age').value);
+  var sex = document.getElementById('sex').value;
+  return { wt: wt, ht: ht, age: age, sex: sex };
+}
+
+function calcIBW(ht, sex) {
+  if (!ht) return null;
+  var base = sex === 'M' ? 50 : 45.5;
+  var inches = (ht - 152.4) / 2.54;
+  return base + 2.3 * inches;
+}
+
+function calcLBW(wt, ht, sex) {
+  if (!wt || !ht) return null;
+  if (sex === 'M') return 1.1 * wt - 128 * Math.pow(wt / ht, 2);
+  return 1.07 * wt - 148 * Math.pow(wt / ht, 2);
+}
+
+function calc() {
+  var v = getVals();
+  var wt = v.wt, ht = v.ht, age = v.age, sex = v.sex;
+
+  // IBW bar
+  var ibw = calcIBW(ht, sex);
+  var lbw = calcLBW(wt, ht, sex);
+  var bmi = (wt && ht) ? wt / Math.pow(ht / 100, 2) : null;
+
+  if (wt || ht) {
+    document.getElementById('ibwBar').style.display = 'flex';
+    document.getElementById('ibwVal').textContent = ibw ? 'IBW: ' + fmt(ibw, 0) + 'kg' : 'IBW: --';
+    document.getElementById('lbwVal').textContent = lbw ? 'LBW: ' + fmt(lbw, 0) + 'kg' : 'LBW: --';
+    document.getElementById('bmiVal').textContent = bmi ? 'BMI: ' + fmt(bmi, 1) : 'BMI: --';
+  } else {
+    document.getElementById('ibwBar').style.display = 'none';
+  }
+
+  if (!wt) {
+    hideAll();
+    return;
+  }
+
+  // Use IBW for dosing if available and obese (BMI > 30), else TBW
+  var dosingWt = wt;
+  var dosingNote = 'TBW: ' + wt + ' kg';
+  if (ibw && bmi && bmi > 30) {
+    dosingWt = ibw;
+    dosingNote = 'IBW used (BMI ' + fmt(bmi,1) + '): ' + fmt(ibw,0) + ' kg';
+  }
+
+  buildInduction(wt, dosingWt, ibw, dosingNote, age);
+  buildMaintenance(wt, dosingWt, ibw, dosingNote, age);
+  buildDrips(wt);
+  buildFluids(wt, ibw, age);
+  buildAbx(wt);
+  buildEmergency(wt, dosingWt);
+}
+
+function hideAll() {
+  for (var i = 0; i <= 5; i++) {
+    document.getElementById('nd' + i).style.display = 'block';
+  }
+  var ids = ['induction-content','maintenance-content','drips-content','fluids-content','abx-content','emergency-content'];
+  for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).style.display = 'none';
+}
+
+function showSection(ndId, contentId) {
+  document.getElementById(ndId).style.display = 'none';
+  document.getElementById(contentId).style.display = 'block';
+}
+
+function card(name, cls, badge, badgeCls, rows) {
+  var html = '<div class="drug-card">';
+  html += '<div class="drug-header"><div><div class="drug-name">' + name + '</div><div class="drug-class">' + cls + '</div></div>';
+  if (badge) html += '<span class="drug-badge ' + (badgeCls||'') + '">' + badge + '</span>';
+  html += '</div><div class="dose-grid">';
+  for (var i = 0; i < rows.length; i++) {
+    var r2 = rows[i];
+    html += '<div class="dose-cell' + (r2.full ? ' full' : '') + '">';
+    html += '<div class="dose-label">' + r2.label + '</div>';
+    html += '<div class="dose-val' + (r2.color ? ' ' + r2.color : '') + '">' + r2.val + '</div>';
+    if (r2.sub) html += '<div class="dose-sub">' + r2.sub + '</div>';
+    html += '</div>';
+  }
+  html += '</div></div>';
+  return html;
+}
+
+function buildInduction(wt, dw, ibw, dnote, age) {
+  showSection('nd0', 'induction-content');
+  var html = '';
+
+  html += '<div class="sec-label">Induction agents</div>';
+
+  // Propofol
+  var pLo = fmt(dw * 1.5, 0), pHi = fmt(dw * 2.5, 0);
+  var pElLo = fmt(dw * 1.0, 0), pElHi = fmt(dw * 1.5, 0);
+  html += card('Propofol', 'Induction / sedation', '10 mg/mL', '',
+    [{label:'Induction', val: pLo + ' – ' + pHi + ' mg', color:'highlight', sub:'1.5–2.5 mg/kg'},
+     {label:'Elderly/Sick', val: pElLo + ' – ' + pElHi + ' mg', color:'amber', sub:'1.0–1.5 mg/kg (reduce)'},
+     {label:'Dosing basis', val: dnote, full:true}]);
+
+  // Ketamine
+  var kInd = fmt(dw * 1.5, 0) + ' – ' + fmt(dw * 2, 0);
+  var kDiss = fmt(dw * 0.5, 0) + ' – ' + fmt(dw * 1, 0);
+  var kSub = fmt(dw * 0.1, 1) + ' – ' + fmt(dw * 0.3, 1);
+  html += card('Ketamine', 'Dissociative / adjunct', 'Preserve airway', 'amber',
+    [{label:'Induction', val: kInd + ' mg', color:'highlight', sub:'1.5–2 mg/kg IV'},
+     {label:'Dissociative', val: kDiss + ' mg', sub:'0.5–1 mg/kg'},
+     {label:'Sub-dissoc (pain)', val: kSub + ' mg', sub:'0.1–0.3 mg/kg'},
+     {label:'IM induction', val: fmt(dw * 4, 0) + ' – ' + fmt(dw * 6, 0) + ' mg', sub:'4–6 mg/kg IM'}]);
+
+  // Etomidate
+  var eto = fmt(dw * 0.3, 0) + ' – ' + fmt(dw * 0.4, 0);
+  html += card('Etomidate', 'Hemodynamic stability', 'RSI', 'red',
+    [{label:'Induction', val: eto + ' mg', color:'highlight', sub:'0.3–0.4 mg/kg'},
+     {label:'Max single dose', val: fmt(dw * 0.4, 0) + ' mg', sub:'Caution: adrenal suppression'}]);
+
+  html += '<div class="sec-label">Neuromuscular blockade</div>';
+
+  // Succinylcholine
+  var succReg = fmt(wt * 1.5, 0);
+  var succRSI = fmt(wt * 2, 0);
+  html += card('Succinylcholine', 'Depolarizing NMB', 'RSI', 'red',
+    [{label:'RSI dose', val: succRSI + ' mg', color:'red', sub:'2 mg/kg TBW'},
+     {label:'Standard', val: succReg + ' mg', sub:'1.5 mg/kg TBW'},
+     {label:'Onset / Duration', val: '45–60s / 8–12 min', full:true}]);
+
+  // Rocuronium
+  var rocInt = fmt(dw * 0.6, 0) + ' – ' + fmt(dw * 0.8, 0);
+  var rocRSI = fmt(dw * 1.2, 0);
+  var sugRev = fmt(dw * 16, 0);
+  html += card('Rocuronium', 'Non-depolarizing NMB', 'Sugammadex reversible', '',
+    [{label:'Intubating dose', val: rocInt + ' mg', color:'highlight', sub:'0.6–0.8 mg/kg'},
+     {label:'RSI dose', val: rocRSI + ' mg', color:'amber', sub:'1.2 mg/kg'},
+     {label:'Maint bolus', val: fmt(dw * 0.1, 0) + ' – ' + fmt(dw * 0.2, 0) + ' mg', sub:'0.1–0.2 mg/kg'},
+     {label:'Sugammadex rev (16)', val: sugRev + ' mg', sub:'Immediate reversal'}]);
+
+  // Vecuronium
+  html += card('Vecuronium', 'Non-depolarizing NMB', '', '',
+    [{label:'Intubating', val: fmt(dw * 0.1, 1) + ' mg', color:'highlight', sub:'0.1 mg/kg'},
+     {label:'Maint bolus', val: fmt(dw * 0.01, 2) + ' – ' + fmt(dw * 0.015, 2) + ' mg', sub:'0.01–0.015 mg/kg'}]);
+
+  html += '<div class="sec-label">Opioids — induction</div>';
+
+  // Fentanyl
+  var fentInd = fmt(dw * 1, 0) + ' – ' + fmt(dw * 2, 0);
+  html += card('Fentanyl', 'Synthetic opioid', '0.05 mg/mL', '',
+    [{label:'Induction blunting', val: fentInd + ' mcg', color:'highlight', sub:'1–2 mcg/kg'},
+     {label:'Intubation blunting', val: fmt(dw * 2, 0) + ' – ' + fmt(dw * 3, 0) + ' mcg', sub:'2–3 mcg/kg, 3 min before'},
+     {label:'Analgesic bolus', val: fmt(dw * 0.5, 0) + ' – ' + fmt(dw * 1, 0) + ' mcg', sub:'0.5–1 mcg/kg prn'}]);
+
+  // Morphine
+  html += card('Morphine', 'Opioid', '', '',
+    [{label:'Induction / IV', val: fmt(wt * 0.05, 1) + ' – ' + fmt(wt * 0.1, 1) + ' mg', color:'highlight', sub:'0.05–0.1 mg/kg'},
+     {label:'Max single', val: fmt(wt * 0.15, 1) + ' mg', sub:'0.15 mg/kg'}]);
+
+  // Hydromorphone
+  html += card('Hydromorphone', 'Opioid (5x morphine)', '', '',
+    [{label:'IV dose', val: fmt(wt * 0.01, 2) + ' – ' + fmt(wt * 0.02, 2) + ' mg', color:'highlight', sub:'0.01–0.02 mg/kg'},
+     {label:'Max single', val: fmt(wt * 0.04, 2) + ' mg', sub:'0.04 mg/kg'}]);
+
+  html += '<div class="sec-label">Adjuncts — induction</div>';
+
+  // Lidocaine
+  html += card('Lidocaine', 'Blunt intubation response', '', '',
+    [{label:'IV bolus (1.5 mg/kg)', val: fmt(dw * 1.5, 0) + ' mg', color:'highlight', sub:'Give 90s before laryngoscopy'},
+     {label:'Infusion loading', val: fmt(dw * 1.5, 0) + ' mg', sub:'Then 1.5 mg/kg/hr maint'}]);
+
+  // Dexamethasone
+  html += card('Dexamethasone', 'PONV + anti-inflam', 'Give early', 'amber',
+    [{label:'PONV prophylaxis', val: '4 – 8 mg', color:'highlight', sub:'Give at induction'},
+     {label:'Anti-inflam / airway', val: '8 – 10 mg', sub:'Airway edema, post-op pain'}]);
+
+  // Midazolam
+  html += card('Midazolam', 'Benzo / premedication', '', '',
+    [{label:'Pre-op anxiolysis', val: '1 – 2 mg', color:'highlight', sub:'IV, titrate to effect'},
+     {label:'Induction adjunct', val: fmt(dw * 0.02, 2) + ' – ' + fmt(dw * 0.04, 2) + ' mg', sub:'0.02–0.04 mg/kg'}]);
+
+  // Glycopyrrolate
+  html += card('Glycopyrrolate', 'Anticholinergic', '', '',
+    [{label:'Standard', val: '0.1 – 0.2 mg', color:'highlight', sub:'IV, antisialagogue / HR'},
+     {label:'With neostigmine', val: fmt(dw * 0.01, 3) + ' mg', sub:'0.01 mg/kg (paired)'}]);
+
+  document.getElementById('induction-content').innerHTML = html;
+}
+
+function buildMaintenance(wt, dw, ibw, dnote, age) {
+  showSection('nd1', 'maintenance-content');
+  var html = '';
+
+  html += '<div class="sec-label">Volatile agents</div>';
+
+  // MAC - age adjusted
+  var ageFactor = age ? (1 - (age > 40 ? (age - 40) * 0.006 : 0)) : 1;
+  var sevMAC = fmt(2.05 * ageFactor, 2);
+  var desMAC = fmt(6.6 * ageFactor, 2);
+  var isoMAC = fmt(1.17 * ageFactor, 2);
+
+  html += '<div class="drug-card"><div class="drug-header"><div><div class="drug-name">MAC Reference</div><div class="drug-class">Age-adjusted' + (age ? ' (age ' + age + ')' : '') + '</div></div></div>';
+  html += '<div class="dose-grid">';
+  html += '<div class="dose-cell"><div class="dose-label">Sevoflurane</div><div class="dose-val highlight">' + sevMAC + '%</div><div class="dose-sub">MAC-awake: ~0.4%</div></div>';
+  html += '<div class="dose-cell"><div class="dose-label">Desflurane</div><div class="dose-val highlight">' + desMAC + '%</div><div class="dose-sub">MAC-awake: ~2.4%</div></div>';
+  html += '<div class="dose-cell"><div class="dose-cell"><div class="dose-label">Isoflurane</div><div class="dose-val highlight">' + isoMAC + '%</div><div class="dose-sub">MAC-awake: ~0.4%</div></div></div>';
+  html += '<div class="dose-cell"><div class="dose-label">N2O (additive)</div><div class="dose-val">104%</div><div class="dose-sub">Reduces volatile need ~30%</div></div>';
+  html += '</div></div>';
+
+  html += '<div class="sec-label">Propofol TIVA</div>';
+  html += card('Propofol infusion', 'TIVA maintenance', 'mcg/kg/min', 'blue',
+    [{label:'Light sedation', val: fmt(dw*25/1000*60,1) + ' mg/hr', color:'blue', sub:'25 mcg/kg/min'},
+     {label:'Moderate (TIVA)', val: fmt(dw*75/1000*60,1) + ' mg/hr', color:'highlight', sub:'75 mcg/kg/min'},
+     {label:'Deep / induction', val: fmt(dw*150/1000*60,1) + ' mg/hr', color:'amber', sub:'150 mcg/kg/min'},
+     {label:'Dosing basis', val: dnote, full:true}]);
+
+  html += '<div class="sec-label">Opioid infusions</div>';
+
+  // Remifentanil
+  html += card('Remifentanil', 'Ultra-short opioid', 'mcg/kg/min', 'blue',
+    [{label:'Analgesic', val: fmt(dw*0.05/1000*60,2) + ' – ' + fmt(dw*0.2/1000*60,2) + ' mg/hr', color:'highlight', sub:'0.05–0.2 mcg/kg/min'},
+     {label:'High dose', val: fmt(dw*0.5/1000*60,2) + ' mg/hr', color:'amber', sub:'0.5 mcg/kg/min'},
+     {label:'Note', val: 'Plan post-op analgesia early', full:true}]);
+
+  // Fentanyl infusion
+  html += card('Fentanyl infusion', 'Continuous opioid', '', '',
+    [{label:'Infusion rate', val: fmt(dw*1/1000*60,2) + ' – ' + fmt(dw*2/1000*60,2) + ' mg/hr', color:'highlight', sub:'1–2 mcg/kg/hr'},
+     {label:'Range', val: fmt(dw*0.5/1000*60,3) + ' – ' + fmt(dw*3/1000*60,2) + ' mg/hr', sub:'0.5–3 mcg/kg/hr'}]);
+
+  html += '<div class="sec-label">NMB maintenance</div>';
+  html += card('Neostigmine reversal', 'Cholinesterase inhibitor', 'TOF based', '',
+    [{label:'TOF 1–2 (deep)', val: fmt(dw*0.07,2) + ' mg', color:'red', sub:'0.07 mg/kg — with glyco'},
+     {label:'TOF 3–4 (mod)', val: fmt(dw*0.04,2) + ' mg', color:'amber', sub:'0.04 mg/kg — with glyco'},
+     {label:'Max dose', val: '5 mg', sub:'Do not exceed regardless of weight'},
+     {label:'Glycopyrrolate pair', val: fmt(dw*0.01,3) + ' mg', sub:'0.01 mg/kg with neostig'}]);
+
+  html += card('Sugammadex', 'Selective relaxant binding', 'Preferred', '',
+    [{label:'Moderate block (TOF 2)', val: fmt(dw*2,0) + ' mg', color:'highlight', sub:'2 mg/kg'},
+     {label:'Deep block (PTC 1-2)', val: fmt(dw*4,0) + ' mg', color:'amber', sub:'4 mg/kg'},
+     {label:'Immediate reversal', val: fmt(dw*16,0) + ' mg', color:'red', sub:'16 mg/kg (RSI reversal)'}]);
+
+  html += '<div class="sec-label">Multimodal analgesia</div>';
+  html += card('Ketorolac', 'NSAID', '', '',
+    [{label:'Standard dose', val: '15 – 30 mg', color:'highlight', sub:'IV, give near end of case'},
+     {label:'Elderly / renal risk', val: '15 mg', sub:'Use lower dose, caution'}]);
+
+  html += card('Acetaminophen IV', 'Non-opioid analgesic', '', '',
+    [{label:'< 50 kg', val: fmt(Math.min(wt*15,750),0) + ' mg', color:'highlight', sub:'15 mg/kg, max 750mg q6h'},
+     {label:'> 50 kg', val: '1000 mg', color:'highlight', sub:'q6h, max 4g/24hr'}]);
+
+  html += card('Ondansetron', 'PONV — 5HT3 blocker', '', '',
+    [{label:'Prophylaxis', val: '4 mg', color:'highlight', sub:'30–60 min before end of case'},
+     {label:'Treatment', val: '4 mg', sub:'May repeat, max 8 mg/4hr'}]);
+
+  document.getElementById('maintenance-content').innerHTML = html;
+}
+
+function buildDrips(wt) {
+  showSection('nd2', 'drips-content');
+  var html = '';
+
+  function dripCard(name, conc, concLabel, rows, note, badgeColor) {
+    var h = '<div class="drip-card"><div class="drip-header">';
+    h += '<div><div class="drip-name">' + name + '</div><div class="drip-conc">' + concLabel + '</div></div>';
+    h += '</div><div class="drip-body">';
+    for (var i = 0; i < rows.length; i++) {
+      var mcgPerKgMin = rows[i].dose;
+      var mgPerHr = mcgPerKgMin * wt * 60 / 1000;
+      var mlPerHr = mgPerHr / conc;
+      h += '<div class="drip-row"><div class="drip-dose">' + rows[i].label + '</div>';
+      h += '<div class="drip-rate' + (rows[i].red ? ' red' : '') + '">' + fmt(mlPerHr,1) + ' mL/hr</div></div>';
+    }
+    if (note) h += '<div class="drip-note">' + note + '</div>';
+    h += '</div></div>';
+    return h;
+  }
+
+  html += '<div class="sec-label">Vasopressors</div>';
+
+  // Phenylephrine — 100 mcg/mL (standard)
+  var pheConc = 0.1; // mg/mL
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Phenylephrine</div><div class="drip-conc">100 mcg/mL standard (10 mg in 100 mL NS)</div></div></div><div class="drip-body">';
+  var pheDoses = [{d:0.25,l:'Low (0.25 mcg/kg/min)'},{d:0.5,l:'Moderate (0.5 mcg/kg/min)'},{d:1.0,l:'High (1.0 mcg/kg/min)'},{d:1.5,l:'Max (1.5 mcg/kg/min)'}];
+  for (var i = 0; i < pheDoses.length; i++) {
+    var mlhr = pheDoses[i].d * wt * 60 / 1000 / pheConc;
+    html += '<div class="drip-row"><div class="drip-dose">' + pheDoses[i].l + '</div><div class="drip-rate">' + fmt(mlhr,1) + ' mL/hr</div></div>';
+  }
+  html += '<div class="drip-note">Pure alpha-1 agonist. First-line for spinal hypotension. Reflex bradycardia possible. Bolus: 50–200 mcg IV push.</div>';
+  html += '</div></div>';
+
+  // Norepinephrine — 4 mg/250 mL = 16 mcg/mL
+  var noreConc = 0.016; // mg/mL
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Norepinephrine</div><div class="drip-conc">16 mcg/mL (4 mg in 250 mL D5W)</div></div></div><div class="drip-body">';
+  var noreDoses = [{d:0.01,l:'Low (0.01 mcg/kg/min)'},{d:0.05,l:'Moderate (0.05 mcg/kg/min)'},{d:0.1,l:'High (0.1 mcg/kg/min)'},{d:0.3,l:'Vasoplegic shock (0.3 mcg/kg/min)', red:true}];
+  for (var i = 0; i < noreDoses.length; i++) {
+    var mlhr = noreDoses[i].d * wt * 60 / 1000 / noreConc;
+    html += '<div class="drip-row"><div class="drip-dose">' + noreDoses[i].l + '</div><div class="drip-rate' + (noreDoses[i].red?' red':'') + '">' + fmt(mlhr,1) + ' mL/hr</div></div>';
+  }
+  html += '<div class="drip-note">Alpha + Beta1. First-line vasopressor for septic shock. Central line preferred.</div>';
+  html += '</div></div>';
+
+  // Epinephrine — 1 mg/250 mL = 4 mcg/mL
+  var epiConc = 0.004;
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Epinephrine</div><div class="drip-conc">4 mcg/mL (1 mg in 250 mL NS)</div></div></div><div class="drip-body">';
+  var epiDoses = [{d:0.01,l:'Bronchospasm / cardiac (0.01)'},{d:0.05,l:'Moderate (0.05 mcg/kg/min)'},{d:0.1,l:'High (0.1 mcg/kg/min)'},{d:0.2,l:'Cardiogenic shock (0.2)', red:true}];
+  for (var i = 0; i < epiDoses.length; i++) {
+    var mlhr = epiDoses[i].d * wt * 60 / 1000 / epiConc;
+    html += '<div class="drip-row"><div class="drip-dose">' + epiDoses[i].l + '</div><div class="drip-rate' + (epiDoses[i].red?' red':'') + '">' + fmt(mlhr,1) + ' mL/hr</div></div>';
+  }
+  html += '<div class="drip-note">Alpha + Beta1 + Beta2. Push dose epi: 10–20 mcg boluses (0.1 mg in 10 mL = 10 mcg/mL).</div>';
+  html += '</div></div>';
+
+  // Vasopressin — fixed dose, not weight based
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Vasopressin</div><div class="drip-conc">0.4 units/mL (20 units in 50 mL NS) — NOT weight based</div></div></div><div class="drip-body">';
+  html += '<div class="drip-row"><div class="drip-dose">Vasodilatory shock (0.03 u/min)</div><div class="drip-rate">4.5 mL/hr</div></div>';
+  html += '<div class="drip-row"><div class="drip-dose">Standard (0.04 u/min)</div><div class="drip-rate">6 mL/hr</div></div>';
+  html += '<div class="drip-row"><div class="drip-dose">Max (0.1 u/min)</div><div class="drip-rate red">15 mL/hr</div></div>';
+  html += '<div class="drip-note">V1 + V2 receptor agonist. Not titrated by weight. Fixed dose adjunct. Do not exceed 0.1 u/min.</div>';
+  html += '</div></div>';
+
+  // Dopamine — 400 mg/250 mL = 1.6 mg/mL
+  var dopConc = 1.6;
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Dopamine</div><div class="drip-conc">1600 mcg/mL (400 mg in 250 mL D5W)</div></div></div><div class="drip-body">';
+  var dopDoses = [{d:2,l:'Renal dose (2 mcg/kg/min)'},{d:5,l:'Cardiac (5 mcg/kg/min)'},{d:10,l:'Vasopressor (10 mcg/kg/min)'},{d:20,l:'Max (20 mcg/kg/min)', red:true}];
+  for (var i = 0; i < dopDoses.length; i++) {
+    var mlhr = dopDoses[i].d * wt * 60 / 1000 / (dopConc/1000);
+    html += '<div class="drip-row"><div class="drip-dose">' + dopDoses[i].l + '</div><div class="drip-rate' + (dopDoses[i].red?' red':'') + '">' + fmt(mlhr,1) + ' mL/hr</div></div>';
+  }
+  html += '<div class="drip-note">Dose-dependent receptor activity. Rarely first-line now. Tachyarrhythmia risk.</div>';
+  html += '</div></div>';
+
+  html += '<div class="sec-label">Sedation / adjunct infusions</div>';
+
+  // Dexmedetomidine — 4 mcg/mL
+  var dexConc = 0.004;
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Dexmedetomidine</div><div class="drip-conc">4 mcg/mL (200 mcg in 50 mL NS)</div></div></div><div class="drip-body">';
+  var dexLoad = fmt(wt * 1 / 4, 1);
+  html += '<div class="drip-row"><div class="drip-dose">Loading (1 mcg/kg over 10 min)</div><div class="drip-rate">' + dexLoad + ' mL over 10 min</div></div>';
+  var dexDoses = [{d:0.2,l:'Low (0.2 mcg/kg/hr)'},{d:0.5,l:'Moderate (0.5 mcg/kg/hr)'},{d:0.7,l:'High (0.7 mcg/kg/hr)'}];
+  for (var i = 0; i < dexDoses.length; i++) {
+    var mlhr = dexDoses[i].d * wt / (dexConc * 1000);
+    html += '<div class="drip-row"><div class="drip-dose">' + dexDoses[i].l + '</div><div class="drip-rate">' + fmt(mlhr,1) + ' mL/hr</div></div>';
+  }
+  html += '<div class="drip-note">Alpha-2 agonist. Cooperative sedation, no respiratory depression. Bradycardia / hypotension common with load.</div>';
+  html += '</div></div>';
+
+  // Propofol infusion
+  html += '<div class="drip-card"><div class="drip-header"><div><div class="drip-name">Propofol infusion</div><div class="drip-conc">10 mg/mL standard</div></div></div><div class="drip-body">';
+  var propDoses = [{d:25,l:'Sedation (25 mcg/kg/min)'},{d:75,l:'TIVA moderate (75 mcg/kg/min)'},{d:150,l:'TIVA deep (150 mcg/kg/min)'}];
+  for (var i = 0; i < propDoses.length; i++) {
+    var mlhr = propDoses[i].d * wt * 60 / 1000 / 10;
+    html += '<div class="drip-row"><div class="drip-dose">' + propDoses[i].l + '</div><div class="drip-rate">' + fmt(mlhr,1) + ' mL/hr</div></div>';
+  }
+  html += '<div class="drip-note">Watch for PRIS with >4 mg/kg/hr >48hrs. Triglycerides if prolonged infusion.</div>';
+  html += '</div></div>';
+
+  document.getElementById('drips-content').innerHTML = html;
+}
+
+function buildFluids(wt, ibw, age) {
+  showSection('nd3', 'fluids-content');
+  var html = '';
+
+  // 4-2-1 maintenance
+  var maint = 0;
+  if (wt <= 10) maint = wt * 4;
+  else if (wt <= 20) maint = 40 + (wt - 10) * 2;
+  else maint = 60 + (wt - 20) * 1;
+
+  // Fasting deficit estimate (assume 8hr NPO)
+  var npo = 8;
+  var deficit = maint * npo;
+  var deficitHr1 = fmt(deficit * 0.5, 0);
+  var deficitHr2 = fmt(deficit * 0.25, 0);
+  var deficitHr3 = fmt(deficit * 0.25, 0);
+
+  // 3rd space / surgical loss estimates
+  var minSurg = fmt(wt * 2, 0);
+  var modSurg = fmt(wt * 6, 0);
+  var majSurg = fmt(wt * 10, 0);
+
+  // Blood volume
+  var ebv = wt * (age && age < 18 ? 80 : 65);
+  var mabl = ibw ? fmt((ebv * (0.45 - 0.21)) / 0.33, 0) : fmt((ebv * (0.45 - 0.21)) / 0.33, 0);
+
+  html += '<div class="sec-label">Maintenance (4-2-1 rule)</div>';
+  html += '<div class="fluid-card"><div class="fluid-header"><div class="fluid-title">Hourly maintenance rate</div></div>';
+  html += '<div class="fluid-grid">';
+  html += '<div class="fluid-cell"><div class="fluid-label">Maintenance rate</div><div class="fluid-val">' + fmt(maint,0) + ' mL/hr</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">Daily requirement</div><div class="fluid-val">' + fmt(maint*24,0) + ' mL</div></div>';
+  html += '</div></div>';
+
+  html += '<div class="sec-label">Fasting deficit (NPO ' + npo + ' hrs assumed)</div>';
+  html += '<div class="fluid-card"><div class="fluid-header"><div class="fluid-title">Replace over 3 hrs (modified)</div></div>';
+  html += '<div class="fluid-grid">';
+  html += '<div class="fluid-cell"><div class="fluid-label">Total deficit</div><div class="fluid-val">' + fmt(deficit,0) + ' mL</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">+ Maintenance</div><div class="fluid-val">' + fmt(maint,0) + ' mL/hr</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">Hour 1 (50%)</div><div class="fluid-val amber">' + fmt(parseFloat(deficitHr1)+maint,0) + ' mL</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">Hour 2 (25%)</div><div class="fluid-val">' + fmt(parseFloat(deficitHr2)+maint,0) + ' mL</div></div>';
+  html += '<div class="fluid-cell full"><div class="fluid-label">Hour 3 (25%)</div><div class="fluid-val">' + fmt(parseFloat(deficitHr3)+maint,0) + ' mL</div></div>';
+  html += '</div></div>';
+
+  html += '<div class="sec-label">Surgical third-space losses</div>';
+  html += '<div class="fluid-card"><div class="fluid-header"><div class="fluid-title">Estimated replacement per hour</div></div>';
+  html += '<div class="fluid-grid">';
+  html += '<div class="fluid-cell"><div class="fluid-label">Minimal (eye, hernia)</div><div class="fluid-val">' + minSurg + ' mL/hr</div><div class="fluid-sub">~2 mL/kg/hr</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">Moderate (bowel)</div><div class="fluid-val amber">' + modSurg + ' mL/hr</div><div class="fluid-sub">~6 mL/kg/hr</div></div>';
+  html += '<div class="fluid-cell full"><div class="fluid-label">Major (trauma / open abd)</div><div class="fluid-val red">' + majSurg + ' mL/hr</div><div class="fluid-sub">~10 mL/kg/hr</div></div>';
+  html += '</div></div>';
+
+  html += '<div class="sec-label">Blood volume and transfusion</div>';
+  html += '<div class="fluid-card"><div class="fluid-header"><div class="fluid-title">Estimated blood volume (EBV)</div></div>';
+  html += '<div class="fluid-grid">';
+  html += '<div class="fluid-cell"><div class="fluid-label">EBV (~65 mL/kg)</div><div class="fluid-val">' + fmt(ebv,0) + ' mL</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">MABL (Hgb 7 trigger)</div><div class="fluid-val amber">' + mabl + ' mL</div><div class="fluid-sub">allowable blood loss</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">pRBC 1 unit raises Hgb</div><div class="fluid-val">~1 g/dL</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">FFP dose</div><div class="fluid-val">' + fmt(wt*10,0) + ' – ' + fmt(wt*15,0) + ' mL</div><div class="fluid-sub">10–15 mL/kg</div></div>';
+  html += '<div class="fluid-cell full"><div class="fluid-label">Plt dose (1 apheresis unit)</div><div class="fluid-val">200–400 mL</div><div class="fluid-sub">Raises plt by ~30-60k</div></div>';
+  html += '</div></div>';
+
+  html += '<div class="sec-label">Urine output targets</div>';
+  html += '<div class="fluid-card"><div class="fluid-header"><div class="fluid-title">Goal UO</div></div>';
+  html += '<div class="fluid-grid">';
+  html += '<div class="fluid-cell"><div class="fluid-label">Adequate (0.5 mL/kg/hr)</div><div class="fluid-val">' + fmt(wt*0.5,0) + ' mL/hr</div></div>';
+  html += '<div class="fluid-cell"><div class="fluid-label">Good (1 mL/kg/hr)</div><div class="fluid-val">' + fmt(wt*1,0) + ' mL/hr</div></div>';
+  html += '</div></div>';
+
+  document.getElementById('fluids-content').innerHTML = html;
+}
+
+function buildAbx(wt) {
+  showSection('nd4', 'abx-content');
+  var html = '';
+
+  html += '<div class="sec-label">Surgical prophylaxis</div>';
+
+  // Cefazolin
+  var cef = wt < 80 ? '2g' : wt < 120 ? '3g' : '3g (max)';
+  html += card('Cefazolin', '1st gen cephalosporin — most common prophylaxis', 'Give within 60 min', 'amber',
+    [{label:'Dose', val: cef, color:'highlight', sub: wt < 80 ? '< 80 kg: 2g' : wt < 120 ? '80–120 kg: 3g' : '> 120 kg: 3g'},
+     {label:'Re-dose interval', val: '4 hrs', sub:'Or if EBL > 1500 mL'},
+     {label:'Coverage', val: 'Gram+ skin flora', sub:'Strep, Staph'}]);
+
+  // Cefuroxime
+  html += card('Cefuroxime', '2nd gen cephalosporin', '', '',
+    [{label:'Dose', val: '1.5 g', color:'highlight', sub:'IV over 3–5 min'},
+     {label:'Use', val: 'Cardiac, thoracic', sub:'Broader gram+ coverage'}]);
+
+  // Vancomycin
+  var vanc = fmt(wt * 15, 0) + ' – ' + fmt(wt * 20, 0);
+  html += card('Vancomycin', 'Glycopeptide — PCN allergy / MRSA', 'Infuse over 60–90 min', 'red',
+    [{label:'Dose', val: vanc + ' mg', color:'amber', sub:'15–20 mg/kg (TBW)'},
+     {label:'Max single', val: '3000 mg', sub:'Infuse slowly — Red man syndrome'},
+     {label:'Timing', val: 'Start 60–90 min before incision', full:true}]);
+
+  // Metronidazole
+  html += card('Metronidazole', 'Colorectal / anaerobic coverage', '', '',
+    [{label:'Dose', val: '500 mg', color:'highlight', sub:'IV, infuse over 30–60 min'},
+     {label:'Re-dose', val: 'q 6–8 hrs', sub:'For prolonged cases'}]);
+
+  // Gentamicin
+  html += card('Gentamicin', 'Aminoglycoside — gram neg', '', '',
+    [{label:'Dose', val: fmt(wt * 5, 0) + ' mg', color:'highlight', sub:'5 mg/kg (IBW if obese)'},
+     {label:'Use', val: 'GI / GU procedures', sub:'Nephrotoxic — monitor levels'}]);
+
+  // Clindamycin
+  html += card('Clindamycin', 'PCN allergy alternative', '', '',
+    [{label:'Dose', val: '900 mg', color:'highlight', sub:'IV over 20–30 min'},
+     {label:'Re-dose', val: 'q 6 hrs', sub:'For prolonged cases'}]);
+
+  html += '<div class="sec-label">Antifungal</div>';
+  html += card('Fluconazole', 'Azole antifungal (prophylaxis)', '', '',
+    [{label:'Prophylaxis dose', val: '400 mg', color:'highlight', sub:'Single dose IV'},
+     {label:'Treatment', val: fmt(wt * 6, 0) + ' mg', sub:'6 mg/kg loading, then 3–6 mg/kg/day'}]);
+
+  document.getElementById('abx-content').innerHTML = html;
+}
+
+function buildEmergency(wt, dw) {
+  showSection('nd5', 'emergency-content');
+  var html = '';
+
+  html += '<div class="sec-label">Cardiac arrest / ACLS</div>';
+
+  html += card('Epinephrine', 'Cardiac arrest', '1 mg/mL (1:1000)', 'red',
+    [{label:'Cardiac arrest dose', val: '1 mg', color:'red', sub:'IV q3–5 min — standard ACLS'},
+     {label:'Anaphylaxis (IM)', val: '0.3 – 0.5 mg', color:'red', sub:'1:1000, anterolateral thigh'},
+     {label:'Anaphylaxis (IV)', val: '50 – 200 mcg', color:'red', sub:'Titrated, 1:10,000 dilution'},
+     {label:'Push dose', val: '10 – 20 mcg', sub:'0.1 mg in 10 mL = 10 mcg/mL'}]);
+
+  html += card('Atropine', 'Bradycardia / cholinergic', '', 'amber',
+    [{label:'Bradycardia', val: '0.5 – 1 mg', color:'amber', sub:'IV, repeat q3–5 min'},
+     {label:'Max dose', val: '3 mg', sub:'Vagolytic ceiling'},
+     {label:'Antisialagogue', val: '0.2 – 0.4 mg', sub:'Pre-op'}]);
+
+  html += card('Amiodarone', 'VF / VT arrest', '', 'red',
+    [{label:'VF / pulseless VT', val: '300 mg', color:'red', sub:'IV push, then 150 mg if refractory'},
+     {label:'Stable VT infusion', val: '150 mg over 10 min', sub:'Then 1 mg/min x6hr, then 0.5 mg/min'}]);
+
+  html += card('Adenosine', 'SVT', '', '',
+    [{label:'First dose', val: '6 mg', color:'highlight', sub:'Rapid IV push, flush immediately'},
+     {label:'Second dose', val: '12 mg', sub:'If no response after 1–2 min'},
+     {label:'Third dose', val: '12 mg', sub:'May repeat once more'}]);
+
+  html += '<div class="sec-label">Malignant hyperthermia</div>';
+
+  var dantFirst = fmt(wt * 2.5, 0);
+  var dantRepeat = fmt(wt * 1, 0);
+  var dantMax = fmt(wt * 10, 0);
+  html += card('Dantrolene', 'MH treatment — EMERGENCY', 'Call MH Hotline: 1-800-644-9737', 'red',
+    [{label:'Initial bolus', val: dantFirst + ' mg', color:'red', sub:'2.5 mg/kg IV rapid'},
+     {label:'Repeat q5 min prn', val: dantRepeat + ' mg', color:'red', sub:'1 mg/kg per dose'},
+     {label:'Cumulative max', val: dantMax + ' mg', color:'red', sub:'10 mg/kg total'},
+     {label:'Maintenance', val: fmt(wt*1,0) + ' mg q6hr x 24hr', full:true, sub:'Post-episode prophylaxis'}]);
+
+  html += '<div class="sec-label">Local anesthetic toxicity (LAST)</div>';
+
+  var lipid20 = fmt(wt * 1.5, 0);
+  var lipidInf = fmt(wt * 0.25, 0);
+  html += card('Intralipid 20%', 'LAST treatment — EMERGENCY', '20% = 200 mg/mL', 'red',
+    [{label:'Bolus (1.5 mL/kg)', val: lipid20 + ' mL', color:'red', sub:'IV over 2–3 min, may repeat x2'},
+     {label:'Infusion (0.25 mL/kg/min)', val: fmt(wt*0.25*60,0) + ' mL/hr', color:'red', sub:'Continue 30–60 min after stable'},
+     {label:'Max dose', val: fmt(wt*10,0) + ' mL', sub:'10 mL/kg in first 30 min'},
+     {label:'Note', val: 'Avoid propofol as substitute — not equivalent', full:true}]);
+
+  html += '<div class="sec-label">Reversal agents</div>';
+
+  html += card('Naloxone', 'Opioid reversal', 'Titrate carefully', 'amber',
+    [{label:'Titrated reversal', val: '0.04 – 0.08 mg', color:'amber', sub:'q2–3 min, avoid acute withdrawal'},
+     {label:'Full reversal (OD)', val: fmt(wt*0.01,2) + ' mg', color:'red', sub:'0.01 mg/kg, may repeat'},
+     {label:'Infusion', val: fmt(wt*0.005,3) + ' mg/hr', sub:'2/3 of effective dose per hour'}]);
+
+  html += card('Flumazenil', 'Benzo reversal', 'Short duration — resedation risk', 'amber',
+    [{label:'Initial dose', val: '0.2 mg', color:'amber', sub:'IV over 30s, may repeat'},
+     {label:'Max dose', val: '1 mg', sub:'0.2 mg q1 min to max'},
+     {label:'Duration', val: '45–90 min', sub:'Resedation possible — monitor'}]);
+
+  html += card('Neostigmine + Glyco', 'NMB reversal', 'TOF guided', '',
+    [{label:'Neostigmine', val: fmt(dw*0.04,2) + ' – ' + fmt(dw*0.07,2) + ' mg', color:'highlight', sub:'0.04–0.07 mg/kg, max 5 mg'},
+     {label:'Glycopyrrolate', val: fmt(dw*0.01,3) + ' mg', sub:'0.01 mg/kg paired'}]);
+
+  html += card('Sugammadex', 'Selective NMB binding', '', '',
+    [{label:'Moderate (TOF count 2)', val: fmt(wt*2,0) + ' mg', color:'highlight', sub:'2 mg/kg'},
+     {label:'Deep (PTC 1-2)', val: fmt(wt*4,0) + ' mg', color:'amber', sub:'4 mg/kg'},
+     {label:'Immediate / RSI', val: fmt(wt*16,0) + ' mg', color:'red', sub:'16 mg/kg'}]);
+
+  document.getElementById('emergency-content').innerHTML = html;
+}
+
+// init
+calc();
+</script>
+</body>
+</html>
